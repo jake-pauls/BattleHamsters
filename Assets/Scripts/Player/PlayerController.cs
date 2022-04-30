@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
         _moveAction = _playerInput.actions["Movement"];
         _jumpAction = _playerInput.actions["Jump"];
         _interactAction = _playerInput.actions["Interact"];
-        playerModelManager = this.transform.gameObject.GetComponent<PlayerModelManager>();
+        playerModelManager = transform.GetComponent<PlayerModelManager>();
     }
 
     private void Update() {
