@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour {
     [HideInInspector]
     public int pid;
+    public int NutCount;
 
     public float _playerSpeed = 2.0f;
 
