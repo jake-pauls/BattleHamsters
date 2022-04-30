@@ -47,10 +47,10 @@ public class Tube : MonoBehaviour
     {
         yield return new WaitForSeconds(inSplineDuration);
 
-        OnInteractionFinsihed(hamObj);
+        OnInteractionFinished(hamObj);
     }
 
-    private void OnInteractionFinsihed(GameObject hamObj)
+    private void OnInteractionFinished(GameObject hamObj)
     {        
         Assert.IsNotNull(hamObj, "Cannot reset player input, since hamObj is null.");
         
