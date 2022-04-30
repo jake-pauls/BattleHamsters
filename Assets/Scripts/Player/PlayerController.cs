@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
     private InputAction _jumpAction;
     private InputAction _interactAction;
 
+    PlayerModelManager playerModelManager;
     private void Start() {
         _controller = GetComponent<CharacterController>();
         _playerInput = GetComponent<PlayerInput>();
@@ -33,7 +34,8 @@ public class PlayerController : MonoBehaviour {
         _cameraTransform = Camera.main.transform;
         _moveAction = _playerInput.actions["Movement"];
         _jumpAction = _playerInput.actions["Jump"];
-        _interactAction = _playerInput.actions["Interact"]; 
+        _interactAction = _playerInput.actions["Interact"];
+        playerModelManager = transform.GetComponent<PlayerModelManager>();
     }
 
     private void Update() {
@@ -50,6 +52,10 @@ public class PlayerController : MonoBehaviour {
         // Changes the height position of the player
         if (_jumpAction.triggered && _groundedPlayer)
             _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -8.0f * _gravityValue);
+
+        if (_interactAction.triggered && this.transform.GetChild(0).gameObject.activeSelf) {
+            playerModelManager.HideObject(false, this.transform.position);
+        }
         
         // Bring the player back down to the ground
         _playerVelocity.y += -35.0f * Time.deltaTime;
@@ -62,5 +68,34 @@ public class PlayerController : MonoBehaviour {
 
         // Check if interact action was triggered 
         // if (_interactAction.triggered)
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.transform.tag == "HamsterBall")
+        {
+            //Debug.Log("hit");
+            Rigidbody otherrb = hit.collider.attachedRigidbody;
+            //Debug.Log(otherrb.velocity);
+            Destroy(otherrb.gameObject);
+            playerModelManager.HideObject(true, otherrb.transform.position);
+
+
+
+            //this.ballState = BallStates.COLLISION;
+            //if (otherrb.velocity == new Vector3(0, 0, 0))
+            //{
+            //    this.ballState = BallStates.IDLE;
+            //}
+
+
+            //// Can make a formula here to adjust for mass, speed etc
+            //// Maybe want to use your own balls velocity here instead of the other balls velocity or some kind of combination of both
+            //Vector3 velocity = otherrb.velocity;
+            //// Could also add some kind of reduction like friction here
+            //Debug.Log(collision.impulse); // Could also just use impulse as well 
+            /*otherrb*//*.AddForce(-new Vector3() * this.mass);*/
+            //otherrb.AddExplosionForce(100, new Vector3(), 5);
+        }
     }
 }
