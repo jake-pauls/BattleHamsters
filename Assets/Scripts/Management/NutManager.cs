@@ -51,6 +51,6 @@ public class NutManager : MonoBehaviour {
     private void OnDrawGizmos() {
         // Yellow: Nut Spawn Location
         Gizmos.color = Color.yellow;
-        Gizmos.DrawCube(_nutSpawnPoint.position, new Vector3(0.55f, 0.55f, 0.55f));
+        Gizmos.DrawWireCube(_nutSpawnPoint.position, new Vector3(1.0f, 1.0f, 1.0f));
     }
 }
