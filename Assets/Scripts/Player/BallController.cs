@@ -7,7 +7,8 @@ using UnityEngine;
 public class BallController : MonoBehaviour
 {
     private Rigidbody _ballRigid;
-    [SerializeField] private float torqueSpeed = 360f;
+    private float torqueSpeedPerSec = 360f;
+    [SerializeField] private float maxTorque = 200f;
     
     private void Awake()
     {
@@ -16,6 +17,6 @@ public class BallController : MonoBehaviour
 
     public void OnMove(Vector2 input)
     {
-        _ballRigid.AddTorque(new Vector3(input.x, 0, input.y) * (Time.deltaTime * torqueSpeed));
+        _ballRigid.AddTorque(new Vector3(input.x, 0, input.y) * (Time.fixedDeltaTime * torqueSpeedPerSec) * maxTorque);
     }
 }

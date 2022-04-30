@@ -3,20 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 public class HamsterController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = .5f;
-    
-    private Rigidbody _hamsterRigid;
+    private CharacterController _characterController;
 
     private void Awake()
     {
-        _hamsterRigid = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     public void OnMove(Vector2 input)
     {
-        _hamsterRigid.MovePosition(new Vector3(input.x, 0, input.y) * (Time.deltaTime * moveSpeed));
+        _characterController.Move(input);
     }
 }
