@@ -175,9 +175,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7875754369028782647}
-  - component: {fileID: 7694107091665788391}
-  - component: {fileID: 7694107091665788384}
-  - component: {fileID: 7694107091665788385}
   m_Layer: 0
   m_Name: HamsterDefault
   m_TagString: Player
@@ -203,74 +200,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &7694107091665788391
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352016937032917133}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1.2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.15, z: 0}
---- !u!114 &7694107091665788384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352016937032917133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: e2513389f0f9be84da50b651261bfa17, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Ground
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &7694107091665788385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7352016937032917133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f731cf7cc3658149b366c52051f3a7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pid: 0
-  NutCount: 0
-  NutPrefab: {fileID: 1792793853396503825, guid: d70187509926ee74090c73af94089a9a, type: 3}
-  _playerSpeed: 6
-  _playerDefaultSpeed: 2
-  _jumpHeight: 1
-  _gravityValue: -9.81
-  _rotationSpeed: 1000
 --- !u!1 &8410031690503995558
 GameObject:
   m_ObjectHideFlags: 0

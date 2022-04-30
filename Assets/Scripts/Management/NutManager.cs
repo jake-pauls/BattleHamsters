@@ -26,11 +26,9 @@ public class NutManager : MonoBehaviour {
     }
 
     private void SpawnNut() {
-        // Spawn Nut, Cooldown, SpawnNut
         _canSpawnNut = false;
 
         if (NumberOfSpawnedNuts < _maxNuts) {
-            Debug.Log("Spawned new nut");
             Instantiate(_nutPrefab, _nutSpawnPoint);
             NumberOfSpawnedNuts++;
         }
