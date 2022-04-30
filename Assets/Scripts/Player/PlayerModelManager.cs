@@ -19,9 +19,13 @@ public class PlayerModelManager : MonoBehaviour
     }
 
     public void HideObject(bool hideHamster, Vector3 spawnPosition)
-    {   
+    {
+        float x = Random.RandomRange(0f, 1f) < 0.5f ? Random.Range(2, 3) : Random.Range(2, 3) * -1;
+        float y = 2;
+        float z = Random.RandomRange(0f, 1f) < 0.5f ? Random.Range(2, 3) : Random.Range(2, 3) * -1;
+        Vector3 offset = new  Vector3(x, y, z);
         if (!hideHamster) {
-            Instantiate(ballObject);
+            Instantiate(ballObject, this.transform.position + offset, this.transform.rotation);
         } 
             
         for (int i = 0; i < transform.childCount; i++) {
