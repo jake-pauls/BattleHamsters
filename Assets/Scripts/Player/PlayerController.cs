@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     private PlayerInput _playerInput;
     private InputAction _moveAction;
     private InputAction _jumpAction;
+    private InputAction _interactAction;
 
     private void Start() {
         _controller = GetComponent<CharacterController>();
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour {
         _cameraTransform = Camera.main.transform;
         _moveAction = _playerInput.actions["Movement"];
         _jumpAction = _playerInput.actions["Jump"];
+        _interactAction = _playerInput.actions["Interact"]; 
     }
 
     private void Update() {
@@ -49,12 +51,16 @@ public class PlayerController : MonoBehaviour {
         if (_jumpAction.triggered && _groundedPlayer)
             _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -8.0f * _gravityValue);
         
+        // Bring the player back down to the ground
         _playerVelocity.y += -35.0f * Time.deltaTime;
+
         _controller.Move(_playerVelocity * Time.deltaTime);
 
-        // Rotate toward camera
-        float targetAngle = _cameraTransform.eulerAngles.y;
-        Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+        // Rotate in the direction of input
+        if (move != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(move);
+
+        // Check if interact action was triggered 
+        // if (_interactAction.triggered)
     }
 }
