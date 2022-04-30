@@ -5,8 +5,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour {
     [HideInInspector]
     public int pid;
+    
+    [Header("Nut Management")]
+    public int NutCount;
+    [SerializeField]
+    private GameObject NutPrefab;
 
-    public float _playerSpeed = 2.0f;
+    public float PlayerSpeed = 6.0f;
 
     [SerializeField]
     private float _playerDefaultSpeed = 2.0f;
@@ -25,8 +30,10 @@ public class PlayerController : MonoBehaviour {
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _interactAction;
+    private InputAction _dropNutAction;
 
     PlayerModelManager playerModelManager;
+
     private void Start() {
         _controller = GetComponent<CharacterController>();
         _playerInput = GetComponent<PlayerInput>();
@@ -34,7 +41,8 @@ public class PlayerController : MonoBehaviour {
         _cameraTransform = Camera.main.transform;
         _moveAction = _playerInput.actions["Movement"];
         _jumpAction = _playerInput.actions["Jump"];
-        _interactAction = _playerInput.actions["Interact"];
+        _interactAction = _playerInput.actions["Interact"]; 
+        _dropNutAction = _playerInput.actions["DropNut"];
         playerModelManager = transform.GetComponent<PlayerModelManager>();
     }
 
@@ -47,7 +55,7 @@ public class PlayerController : MonoBehaviour {
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = move.x * _cameraTransform.right.normalized + move.z * _cameraTransform.forward.normalized;
         move.y = 0f;
-        _controller.Move(move * Time.deltaTime * _playerSpeed);
+        _controller.Move(move * Time.deltaTime * PlayerSpeed);
 
         // Changes the height position of the player
         if (_jumpAction.triggered && _groundedPlayer)
@@ -68,6 +76,14 @@ public class PlayerController : MonoBehaviour {
 
         // Check if interact action was triggered 
         // if (_interactAction.triggered)
+
+        if (_dropNutAction.triggered && NutCount > 0) {
+            PlayerSpeed += NutCount / 2.0f;
+
+            NutCount--;
+            Vector3 newPos = transform.position - transform.right;
+            Instantiate(NutPrefab, newPos, Quaternion.identity);
+        }
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
