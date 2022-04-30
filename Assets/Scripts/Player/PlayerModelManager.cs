@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerModelManager : MonoBehaviour
 {
+
+    public GameObject ballObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,10 @@ public class PlayerModelManager : MonoBehaviour
 
     public void HideObject(bool hideHamster, Vector3 spawnPosition)
     {   
+        if (!hideHamster) {
+            Instantiate(ballObject);
+        } 
+            
         for (int i = 0; i < transform.childCount; i++) {
             transform.GetChild(i).gameObject.SetActive(hideHamster);
             if (hideHamster) {
