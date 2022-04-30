@@ -5,6 +5,7 @@ using Interactables;
 using Pixelplacement;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Spline))]
 public class Tube : MonoBehaviour
@@ -30,10 +31,32 @@ public class Tube : MonoBehaviour
         _spline = GetComponent<Spline>();
     }
 
-    public void OnInteract(GameObject hamObj, bool fromASide)
+    public void OnInteract_Unsafe(GameObject hamObj, bool fromASide)
     {
+        _currentHam = hamObj;
+        
         Tween.Spline(_spline, hamObj.transform, fromASide ? 0 : 1, fromASide ? 1 : 0, true, splineDuration, 0);
+        
+        //todo disable input, physics and collision check perhaps
+        hamObj.GetComponent<PlayerInput>().enabled = false;
+
+        StartCoroutine(DelayedResetHamState(hamObj, splineDuration));
     }
 
+    private IEnumerator DelayedResetHamState(GameObject hamObj, float inSplineDuration)
+    {
+        yield return new WaitForSeconds(inSplineDuration);
+
+        OnInteractionFinsihed(hamObj);
+    }
+
+    private void OnInteractionFinsihed(GameObject hamObj)
+    {        
+        Assert.IsNotNull(hamObj, "Cannot reset player input, since hamObj is null.");
+        
+        //todo reset input, physics and collision check perhaps
+        hamObj.GetComponent<PlayerInput>().enabled = true;
+    }
+    
     public bool IsOccupied => !_currentHam && _spline;
 }

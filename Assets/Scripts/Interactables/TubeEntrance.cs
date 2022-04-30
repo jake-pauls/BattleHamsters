@@ -30,28 +30,15 @@ public class TubeEntrance : MonoBehaviour, IInteractable
 
     public bool IsInteractable(GameObject source)
     {
+        //todo validate hamster
+        // 1. check player tag
+        // 2. check whether in ball form
         return !_parentTube.IsOccupied;
     }
 
     public bool TryInteract(GameObject source)
     {
-        //todo validate hamster
-        // 1. check player tag
-        // 2. check whether in ball form
-        if (false)
-        {
-            return false;
-        }
-        
-        _parentTube._currentHam = source;
-        _parentTube.OnInteract(source, isHead);
+        _parentTube.OnInteract_Unsafe(source, isHead);
         return true;
-    }
-
-    public void OnInteractionFinished(GameObject source)
-    {
-        _parentTube._currentHam = null;
-        
-        //todo try to activate invulnerable duration
     }
 }

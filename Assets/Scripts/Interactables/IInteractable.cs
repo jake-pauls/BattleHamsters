@@ -8,9 +8,6 @@ namespace Interactables
     public interface IInteractable
     {
         public bool IsInteractable(GameObject source);
-
         public bool TryInteract(GameObject source);
-
-        public void OnInteractionFinished(GameObject source);
     }
 }
