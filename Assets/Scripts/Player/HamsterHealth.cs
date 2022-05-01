@@ -71,7 +71,7 @@ public class HamsterHealth : MonoBehaviour
         // GetComponent<Rigidbody>().detectCollisions = !inDead;
         // GetComponent<Rigidbody>().useGravity = !inDead;
         // GetComponent<CapsuleCollider>().enabled = !inDead;
-        gameObject.layer = inDead ? 7 : LayerMask.GetMask("Hamster");
+        gameObject.layer = inDead ? 6 : LayerMask.GetMask("Default");
     }
 
     private IEnumerator TryRevive()

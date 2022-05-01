@@ -5,10 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
 
-public class BallRotation : MonoBehaviour
-{
+public class BallRotation : MonoBehaviour {
     public bool inputDisabled;
-    
+
     private Vector2 _moveInput;
     private Vector3 _movementInput;
     private Rigidbody _rb;
@@ -28,17 +27,15 @@ public class BallRotation : MonoBehaviour
     [SerializeField] private float _jumpHeight;
     private float _turnSpeed = 10f;
     public int pid;
-    public Vector3 ballOffset = new Vector3(0,-1f,0);
+    public Vector3 ballOffset = new Vector3(0, -1f, 0);
     private HamsterHealth hamHealth;
 
-    private void Awake()
-    {
+    private void Awake() {
         hamHealth = GetComponent<HamsterHealth>();
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         _rb = GetComponent<Rigidbody>();
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _rb.useGravity = false;
@@ -46,26 +43,20 @@ public class BallRotation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         Vector3 moveInput = new Vector3(-_moveInput.x, 0f, -_moveInput.y).normalized;
         _movementInput = moveInput;
     }
 
-    public void OnMove(InputValue value)
-    {
+    public void OnMove(InputValue value) {
         _moveInput = inputDisabled ? Vector2.zero : value.Get<Vector2>();
     }
 
-    private void FixedUpdate()
-    {
-        if (_ballMode)
-        {
+    private void FixedUpdate() {
+        if (_ballMode) {
             BallTorque();
             transform.position = _ball.transform.position + ballOffset;
-        }
-        else
-        {
+        } else {
             Vector3 up = Vector3.up;
             Vector3 right = Camera.main.transform.right;
             Vector3 forward = Vector3.Cross(right, up);
@@ -85,8 +76,7 @@ public class BallRotation : MonoBehaviour
         _rb.angularVelocity = new Vector3(0f, angularVelocity, 0f);
     }
 
-    public void BallTorque()
-    {
+    public void BallTorque() {
         Rigidbody rb = _ball.GetComponent<Rigidbody>();
         Vector3 targetAcceleration = _movementInput * _rollSpeed;
         Vector3 currentAcceleration = rb.velocity;
@@ -104,8 +94,7 @@ public class BallRotation : MonoBehaviour
 
     //}
 
-    public void OnMount()
-    {
+    public void OnMount() {
         gameObject.transform.SetParent(_ball.transform);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), true);
         gameObject.transform.localPosition = Vector3.zero;
@@ -117,8 +106,7 @@ public class BallRotation : MonoBehaviour
         _ball.tag = "PlayerHamsterBall";
     }
 
-    public void OnUnmount()
-    {
+    public void OnUnmount() {
         gameObject.transform.SetParent(null);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), false);
         _ballMode = false;
@@ -130,46 +118,45 @@ public class BallRotation : MonoBehaviour
         StartCoroutine(resetRotation());
     }
 
-    IEnumerator resetRotation()
-    {
+    IEnumerator resetRotation() {
         yield return new WaitForSeconds(0.5f);
         transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
     }
 
-    public void OnJump()
-    {
+    public void OnJump() {
         if (inputDisabled) return;
-        
-        if (!_ballMode && IsGrounded())
-        {
+
+        if (!_ballMode && IsGrounded()) {
             _rb.AddForce(Vector3.up * _jumpHeight);
         }
     }
 
-    bool IsGrounded()
-    {
+    bool IsGrounded() {
         return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
 
 
-    public void OnInteract()
-    {
+
+    public void OnInteract() {
         if (inputDisabled) return;
-        
-        Collider[] col = Physics.OverlapSphere(transform.position, _interactionRadius);
-        foreach (Collider c in col)
-        {
-            if (c.tag == "HamsterBall")
-            {
-                _ball = c.gameObject;
-                if (!_ballMode)
+
+        if (!_ballMode) {
+            Collider[] col = Physics.OverlapSphere(transform.position, _interactionRadius);
+            foreach (Collider c in col) {
+                if (c.tag == "HamsterBall") {
+                    _ball = c.gameObject;
                     OnMount();
-                else OnUnmount();
-                GetComponent<Animator>().SetTrigger("Interact");
-                if (_enterBallEffect) _enterBallEffect.SendEvent(_enterBallEventName);
-                break;
+                    GetComponent<Animator>().SetTrigger("Interact");
+                    if (_enterBallEffect) _enterBallEffect.SendEvent(_enterBallEventName);
+                    break;
+                }
             }
         }
+        else {
+            OnUnmount();
+        }
+
+
     }
 
     // private void OnCollisionEnter(Collision collision)
@@ -184,7 +171,7 @@ public class BallRotation : MonoBehaviour
     //
     // public void FlattenHamster(GameObject otherHamster)
     // {
-    //     // Kewk  
+    //     // Kewk
     //     otherHamster.gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 1f);
     // }
 }
