@@ -25,6 +25,7 @@ public class BallRotation : MonoBehaviour
     [SerializeField] private string _enterBallEventName;
     [SerializeField] private float _jumpHeight;
     private float _turnSpeed =10f;
+    public int pid;
 
     // Start is called before the first frame update
     void Start()
