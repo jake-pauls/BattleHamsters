@@ -10,6 +10,7 @@ public class HamsterController : MonoBehaviour
     private Vector3 _movementInput;
     private Rigidbody _rb;
     private bool _ballMode;
+    private float mass = 100f;
 
     [SerializeField] private float _speed;
     [SerializeField] private float _acceleration;
@@ -104,8 +105,24 @@ public class HamsterController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("HamsterBall"))
         {
-            _ball = collision.gameObject;
-            OnMount();
+            if (!_ballMode)
+            {
+                _ball = collision.gameObject;
+                OnMount();
+            }
+            else
+            {
+                Rigidbody otherrb = collision.rigidbody;
+                Debug.Log(otherrb.velocity);
+                Vector3 velocity = otherrb.velocity;
+                otherrb.AddForce(-velocity * mass);
+            }
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            Rigidbody otherrb = collision.rigidbody;
+            // kewk
+            FlattenHamster(otherrb.gameObject);
         }
     }
 
@@ -133,5 +150,11 @@ public class HamsterController : MonoBehaviour
         _ballMode = false;
         
         Destroy(_ball);
+    }
+
+    public void FlattenHamster (GameObject otherHamster)
+    {
+        // Kewk
+        otherHamster.transform.localScale -= new Vector3(0, 0.8f, 0);
     }
 }
