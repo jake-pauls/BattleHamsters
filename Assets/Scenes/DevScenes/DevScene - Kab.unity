@@ -1008,11 +1008,11 @@ PrefabInstance:
     - target: {fileID: 6814472107289786377, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
       propertyPath: _availableCharacters.Array.data[2]
       value: 
-      objectReference: {fileID: 1912743671553626066, guid: 0487ed8af294c064d9022c6cfd797b08, type: 3}
+      objectReference: {fileID: 1001085444461773898, guid: fee986deb3abbf244aaac48c6528b1f7, type: 3}
     - target: {fileID: 6814472107289786377, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
       propertyPath: _availableCharacters.Array.data[3]
       value: 
-      objectReference: {fileID: 4181655818729079595, guid: 724c4a1c22d5f4f47acc0a304855d495, type: 3}
+      objectReference: {fileID: 4432914681401097883, guid: 255c14cbf0985844e9076a949264ca97, type: 3}
     - target: {fileID: 6814472107289786378, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
       propertyPath: _targetGroup
       value: 
