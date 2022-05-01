@@ -54,7 +54,7 @@ public class HamsterController : MonoBehaviour
         }
         if (_jumpAction.triggered)
         {
-            _rb.AddForce(new Vector3(0, 100, 0));
+            Debug.Log("Jumped");
         }
     }
 
