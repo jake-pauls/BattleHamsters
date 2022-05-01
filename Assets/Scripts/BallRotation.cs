@@ -101,6 +101,7 @@ public class BallRotation : MonoBehaviour
 
     public void OnMount()
     {
+        gameObject.transform.rotation = Quaternion.identity;
         gameObject.transform.SetParent(_ball.transform);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), true);
         gameObject.transform.localPosition = Vector3.zero;
