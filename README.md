@@ -18,4 +18,4 @@ Compete with up to 4 friends as a hamster in this fast-paced peanut hoarding bra
 
 Music: [Quick Party Before the End of the World - Francesco D'Andrea](https://artlist.io/song/33738/quick-party-before-the-end-of-the-world)
 
-Sounds sourced from: [Freesound](freesound.org), [Soundsnap](soundsnap.com), [Zapsplat](zapsplat.com)
+Sounds sourced from: [Freesound](https://freesound.org/), [Soundsnap](https://www.soundsnap.com/), [Zapsplat](https://www.zapsplat.com/)
