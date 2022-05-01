@@ -111,7 +111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pid: 0
-  _playerSpeed: 2
+  NutCount: 0
+  NutPrefab: {fileID: 1792793853396503825, guid: d70187509926ee74090c73af94089a9a, type: 3}
+  PlayerSpeed: 6
   _playerDefaultSpeed: 2
   _jumpHeight: 1
   _gravityValue: -9.81

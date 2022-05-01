@@ -74,16 +74,16 @@ public class PlayerController : MonoBehaviour {
         if (move != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(move);
 
-        // Check if interact action was triggered 
-        // if (_interactAction.triggered)
-
         if (_dropNutAction.triggered && NutCount > 0) {
-            PlayerSpeed += NutCount / 2.0f;
+            PlayerSpeed += 0.5f;
 
             NutCount--;
-            Vector3 newPos = transform.position - transform.right;
+            Vector3 newPos = transform.position - (transform.right * 2.0f);
             Instantiate(NutPrefab, newPos, Quaternion.identity);
         }
+
+        if (PlayerSpeed <= 0.0f)
+            PlayerSpeed = 0.01f;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
