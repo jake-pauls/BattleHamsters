@@ -26,6 +26,7 @@ public class BallRotation : MonoBehaviour
     [SerializeField] private float _jumpHeight;
     private float _turnSpeed =10f;
     public int pid;
+    public Vector3 ballOffset = new Vector3(0,-1f,0);
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +55,7 @@ public class BallRotation : MonoBehaviour
         if (_ballMode)
         {
             BallTorque();
-            transform.position = _ball.transform.position;
+            transform.position = _ball.transform.position + ballOffset;
         }
         else
         {
@@ -101,7 +102,6 @@ public class BallRotation : MonoBehaviour
 
     public void OnMount()
     {
-        gameObject.transform.rotation = Quaternion.identity;
         gameObject.transform.SetParent(_ball.transform);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), true);
         gameObject.transform.localPosition = Vector3.zero;
@@ -109,6 +109,7 @@ public class BallRotation : MonoBehaviour
         _ballMode = true;
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
+        gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
     }
     public void OnUnmount()
     {

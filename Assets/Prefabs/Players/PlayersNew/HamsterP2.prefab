@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3200926653391991290, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7288047323661076765, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
       propertyPath: _jumpHeight
       value: 350
