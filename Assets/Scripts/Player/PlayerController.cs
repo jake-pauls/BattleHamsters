@@ -81,36 +81,20 @@ public class PlayerController : MonoBehaviour {
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.transform.tag == "HamsterBall")
-        {
-            //Debug.Log("hit");
-            Rigidbody otherrb = hit.collider.attachedRigidbody;
-            //Debug.Log(otherrb.velocity);
-            Destroy(otherrb.gameObject);
+        //if (hit.transform.tag == "HamsterBall")
+        //{
+        //    //Debug.Log("hit");
+        //    Rigidbody otherrb = hit.collider.attachedRigidbody;
+        //    //Destroy(otherrb.gameObject);
 
-            // mount the ball
-            isBallActive = true;
-            hamTrans.gameObject.SetActive(false);
-            transform.SetParent(hit.transform);
-            Physics.IgnoreCollision(hit.collider, GetComponent<CharacterController>());
-            GetComponent<Rigidbody>().velocity =Vector3.zero;
-            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-            //this.ballState = BallStates.COLLISION;
-            //if (otherrb.velocity == new Vector3(0, 0, 0))
-            //{
-            //    this.ballState = BallStates.IDLE;
-            //}
-
-
-            //// Can make a formula here to adjust for mass, speed etc
-            //// Maybe want to use your own balls velocity here instead of the other balls velocity or some kind of combination of both
-            //Vector3 velocity = otherrb.velocity;
-            //// Could also add some kind of reduction like friction here
-            //Debug.Log(collision.impulse); // Could also just use impulse as well 
-            /*otherrb*/ /*.AddForce(-new Vector3() * this.mass);*/
-            //otherrb.AddExplosionForce(100, new Vector3(), 5);
-        }
+        //    // mount the ball
+        //    isBallActive = true;
+        //    hamTrans.gameObject.SetActive(false);
+        //    transform.SetParent(hit.transform);
+        //    Physics.IgnoreCollision(hit.collider, GetComponent<CharacterController>());
+        //    GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //    GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        //}
     }
 
 

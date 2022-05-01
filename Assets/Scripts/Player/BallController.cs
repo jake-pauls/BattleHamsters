@@ -18,6 +18,6 @@ public class BallController : MonoBehaviour
 
     public void OnMove(Vector2 input)
     {
-        _ballRigid.AddTorque(new Vector3(input.x, 0, input.y) * (torqueSpeedPerSec) * maxTorque);
+        //_ballRigid.AddTorque(new Vector3(input.x, 0, input.y) * (torqueSpeedPerSec) * maxTorque);
     }
 }

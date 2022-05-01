@@ -22,6 +22,10 @@ public class HamsterController : MonoBehaviour
     private Transform camTrans;
 
     [SerializeField] private MeshRenderer hamMeshRenderer;
+
+    private PlayerInput _playerInput;
+    private InputAction _interactAction;
+    private InputAction _jumpAction;
     private void Awake()
     {
         camTrans = Camera.main.transform;
@@ -34,6 +38,9 @@ public class HamsterController : MonoBehaviour
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _rb.useGravity = false;
         _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        _playerInput = GetComponent<PlayerInput>();
+        _interactAction = _playerInput.actions["Interact"];
+        _jumpAction = _playerInput.actions["Jump"];
     }
 
     // Update is called once per frame
@@ -41,6 +48,14 @@ public class HamsterController : MonoBehaviour
     {
         Vector3 moveInput = new Vector3(_moveInput.x, 0f, _moveInput.y).normalized;
         _movementInput = moveInput;
+        if (_ballMode  && _interactAction.triggered)
+        {
+            OnDismount();
+        }
+        if (_jumpAction.triggered)
+        {
+            _rb.AddForce(new Vector3(0, 100, 0));
+        }
     }
 
     public void OnMovement(InputValue value)
@@ -55,6 +70,7 @@ public class HamsterController : MonoBehaviour
         {
             BallTorque();
             transform.position = _ball.transform.position;
+            transform.rotation = Quaternion.LookRotation(_ball.transform.position);
             // _ball.transform.GetComponent<BallController>().OnMove(_moveInput);
         }
         else
@@ -67,6 +83,7 @@ public class HamsterController : MonoBehaviour
             Vector3 currentAcceleration = _rb.velocity;
             Vector3 finalAcceleration = (targetAcceleration - currentAcceleration) * _acceleration;
             finalAcceleration.y = -_gravity;
+            transform.rotation = Quaternion.LookRotation(finalAcceleration);
             _rb.AddForce(finalAcceleration);
         }
     }
@@ -105,10 +122,16 @@ public class HamsterController : MonoBehaviour
         // GetComponent<PlayerModelManager>().HideObject(true, Vector3.zero);
     }
 
-    public void OnDissMount()
+    public void OnDismount()
     {
-        hamMeshRenderer.enabled = true;
+        float x = UnityEngine.Random.Range(0f, 1f) < 0.5f ? UnityEngine.Random.Range(2, 3) : UnityEngine.Random.Range(2, 3) * -1;
+        float y = 2;
+        float z = UnityEngine.Random.Range(0f, 1f) < 0.5f ? UnityEngine.Random.Range(2, 3) : UnityEngine.Random.Range(2, 3) * -1;
+        Vector3 offset = new Vector3(x, y, z);
+        //hamMeshRenderer.enabled = true;
+        Instantiate(_ball, this.transform.position + offset, this.transform.rotation);
         _ballMode = false;
+        
         Destroy(_ball);
     }
 }
