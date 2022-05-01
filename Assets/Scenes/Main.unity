@@ -5005,6 +5005,63 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &1020557454
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114200, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138983231153114204, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
+      propertyPath: m_Name
+      value: HamsterBall Final
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ee2c9fc491ef0c04d9e5ebc9f78ddeff, type: 3}
 --- !u!1 &1021878943 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 630864d42cde31f4a88989cc59ebd9a9, type: 3}
@@ -5949,10 +6006,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6814472107289786375, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
-      propertyPath: m_PlayerPrefab
-      value: 
-      objectReference: {fileID: 3462764868371478922, guid: 88ccf6e66b5f7df40bc06cd3595908a5, type: 3}
     - target: {fileID: 6814472107289786376, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5997,6 +6050,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6814472107289786377, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
+      propertyPath: _availableCharacters.Array.data[0]
+      value: 
+      objectReference: {fileID: 3462764868371478922, guid: 88ccf6e66b5f7df40bc06cd3595908a5, type: 3}
+    - target: {fileID: 6814472107289786377, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
+      propertyPath: _availableCharacters.Array.data[1]
+      value: 
+      objectReference: {fileID: 4264330830217870136, guid: da0438332f8289948a984eac41807299, type: 3}
+    - target: {fileID: 6814472107289786377, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
+      propertyPath: _availableCharacters.Array.data[2]
+      value: 
+      objectReference: {fileID: 1001085444461773898, guid: fee986deb3abbf244aaac48c6528b1f7, type: 3}
+    - target: {fileID: 6814472107289786377, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
+      propertyPath: _availableCharacters.Array.data[3]
+      value: 
+      objectReference: {fileID: 4432914681401097883, guid: 255c14cbf0985844e9076a949264ca97, type: 3}
     - target: {fileID: 6814472107289786378, guid: 3111f9090b87ec4428517c18ceef0c0b, type: 3}
       propertyPath: _targetGroup
       value: 
