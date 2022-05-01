@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
 
@@ -13,7 +14,7 @@ public class BallRotation : MonoBehaviour {
     private Rigidbody _rb;
     public bool _ballMode;
 
-    [SerializeField] private float _speed;
+    public float _speed;
     [SerializeField] private float _acceleration;
     [SerializeField] private float _gravity;
     [SerializeField] private float _rollSpeed;
@@ -29,6 +30,13 @@ public class BallRotation : MonoBehaviour {
     public int pid;
     public Vector3 ballOffset = new Vector3(0, -1f, 0);
     private HamsterHealth hamHealth;
+
+    [Header("Nut Management")]
+    public int NutCount;
+    [SerializeField]
+    private GameObject NutPrefab;
+    [SerializeField]
+    private Text _nutCountText;
 
     private void Awake() {
         hamHealth = GetComponent<HamsterHealth>();
@@ -46,6 +54,8 @@ public class BallRotation : MonoBehaviour {
     void Update() {
         Vector3 moveInput = new Vector3(-_moveInput.x, 0f, -_moveInput.y).normalized;
         _movementInput = moveInput;
+
+        _nutCountText.text = NutCount.ToString();
     }
 
     public void OnMove(InputValue value) {
@@ -157,6 +167,18 @@ public class BallRotation : MonoBehaviour {
         }
 
 
+    }
+
+    public void OnDropNut() {
+        if (NutCount > 0) {
+            // Drop Nut
+            float percentage = _speed * 0.15f;
+            _speed += percentage;
+
+            NutCount--;
+            Vector3 newPos = transform.position - (transform.right * 2.0f);
+            Instantiate(NutPrefab, newPos, Quaternion.identity);
+        }
     }
 
     // private void OnCollisionEnter(Collision collision)
