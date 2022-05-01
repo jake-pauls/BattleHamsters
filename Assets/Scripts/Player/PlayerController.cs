@@ -56,14 +56,6 @@ public class PlayerController : MonoBehaviour {
         else
         {
             _controller.Move(move * Time.deltaTime * _playerSpeed);
-
-            // Changes the height position of the player
-            if (_jumpAction.triggered && _groundedPlayer)
-                _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -8.0f * _gravityValue);
-
-            if (_interactAction.triggered && this.transform.GetChild(0).gameObject.activeSelf) {
-                playerModelManager.HideObject(false, this.transform.position);
-            }
         
             // Bring the player back down to the ground
             _playerVelocity.y += -35.0f * Time.deltaTime;
