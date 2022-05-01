@@ -59,5 +59,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PlayerHamsterBall
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1815136033075508912, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
