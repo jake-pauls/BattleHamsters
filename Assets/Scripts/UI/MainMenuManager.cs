@@ -12,10 +12,14 @@ public class MainMenuManager : MonoBehaviour {
     [SerializeField]
     private GameObject _mainMenuUI;
     [SerializeField]
+    private GameObject _dashboardUI;
+    [SerializeField]
     private Button _startButton;
-    [Header("Players")]
+    [Header("Managers")]
     [SerializeField]
     private GameObject _playerManager;
+    [SerializeField]
+    private DashboardManager _dashboardManager;
 
     [HideInInspector]
     public static bool IsMainMenuUp = true;
@@ -29,8 +33,14 @@ public class MainMenuManager : MonoBehaviour {
         _menuVCam.Priority = 0;
         _gameVCam.Priority = 1;
 
-        // Disable main menu and start looking for players
+        // Disable main menu 
         _mainMenuUI.SetActive(false);
+
+        // Open dashboard
+        _dashboardUI.SetActive(true);
+        _dashboardManager.ResetDashboard();
+
+        // Start looking for players
         _playerManager.SetActive(true);
     }
 
@@ -44,6 +54,7 @@ public class MainMenuManager : MonoBehaviour {
         // Display main menu and deactivate player spawning
         _mainMenuUI.SetActive(true);
         _startButton.Select();
+        _dashboardUI.SetActive(false);
         _playerManager.SetActive(false);
     }
 

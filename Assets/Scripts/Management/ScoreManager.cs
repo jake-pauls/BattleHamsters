@@ -1,12 +1,8 @@
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour {
-    [SerializeField]
-    private ScoreArea _playerOneScoreArea;
-    [SerializeField]
-    private ScoreArea _playerTwoScoreArea;
-    [SerializeField]
-    private ScoreArea _playerThreeScoreArea;
-    [SerializeField]
-    private ScoreArea _playerFourScoreArea;
+    public ScoreArea PlayerOneScoreArea;
+    public ScoreArea PlayerTwoScoreArea;
+    public ScoreArea PlayerThreeScoreArea;
+    public ScoreArea PlayerFourScoreArea;
 }

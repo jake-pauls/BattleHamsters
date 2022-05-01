@@ -55,7 +55,10 @@ MonoBehaviour:
   _gameVCam: {fileID: 0}
   _menuVCam: {fileID: 0}
   _mainMenuUI: {fileID: 1987713227097920025}
+  _dashboardUI: {fileID: 0}
   _startButton: {fileID: 1987713227917845516}
+  _playerManager: {fileID: 0}
+  _dashboardManager: {fileID: 0}
 --- !u!1 &1987713227198822984
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +204,7 @@ GameObject:
   - component: {fileID: 1987713227260532575}
   - component: {fileID: 1987713227260532569}
   - component: {fileID: 1987713227260532574}
+  - component: {fileID: 5012511646456070743}
   m_Layer: 5
   m_Name: StartText
   m_TagString: Untagged
@@ -270,6 +274,21 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: START
+--- !u!114 &5012511646456070743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987713227260532572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.98039216, b: 0.7764706, a: 0.5}
+  m_EffectDistance: {x: 5, y: -5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1987713227539108145
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,6 +300,7 @@ GameObject:
   - component: {fileID: 1987713227539108144}
   - component: {fileID: 1987713227539108146}
   - component: {fileID: 1987713227539108147}
+  - component: {fileID: 4637987914138154264}
   m_Layer: 5
   m_Name: QuitText
   m_TagString: Untagged
@@ -350,6 +370,21 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: QUIT
+--- !u!114 &4637987914138154264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987713227539108145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.98039216, b: 0.7764706, a: 0.5}
+  m_EffectDistance: {x: 5, y: -5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1987713227580504299
 GameObject:
   m_ObjectHideFlags: 0
