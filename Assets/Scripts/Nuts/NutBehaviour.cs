@@ -12,7 +12,7 @@ public class NutBehaviour : MonoBehaviour {
             _playerController.NutCount++;
         
             // Scale player speed as nuts are collected
-            _playerController.PlayerSpeed -= (_playerController.NutCount / 2.0f);
+            _playerController.PlayerSpeed -= 0.5f;
             Destroy(_parentNut);
         }
     }

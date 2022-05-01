@@ -6,11 +6,12 @@ TagManager:
   tags:
   - HamsterBall
   - PlayerHamsterBall
+  - Nut
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Hamster
   - Water
   - UI
   - 
