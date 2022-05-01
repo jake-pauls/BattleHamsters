@@ -8,7 +8,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BallRotation), typeof(CapsuleCollider))]
 public class HamsterHealth : MonoBehaviour
 {
-    public UnityEvent<HamsterHealth, string> OnDead;
+    // int -> pid
+    public UnityEvent<HamsterHealth, int> OnSquished;
 
     [NonSerialized]public bool IsInvulnerable;
 
@@ -64,6 +65,8 @@ public class HamsterHealth : MonoBehaviour
         
         //IMPORTANT mark dirty
         isDirty_Dead = true;
+        
+        OnSquished?.Invoke(this, GetComponent<BallRotation>().pid);
     }
 
     private void UpdateCollision(bool inDead)
