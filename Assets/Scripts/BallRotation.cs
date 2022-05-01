@@ -184,7 +184,7 @@ public class BallRotation : MonoBehaviour
     //
     // public void FlattenHamster(GameObject otherHamster)
     // {
-    //     // Kewk
+    //     // Kewk  
     //     otherHamster.gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 1f);
     // }
 }
