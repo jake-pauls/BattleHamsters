@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _availableCharacters:
-  - {fileID: 125192102924227446, guid: 8e772aa69c2b075459e7ea7d08affdf1, type: 3}
-  - {fileID: 1319661719923366608, guid: 0ce1ea8b6d894174ebf8a41a0e907efd, type: 3}
-  - {fileID: 1912743671553626066, guid: 0487ed8af294c064d9022c6cfd797b08, type: 3}
-  - {fileID: 975126786909135106, guid: c88465fdc98fd964eb4ddf35a2385b36, type: 3}
+  - {fileID: 3462764868371478922, guid: 88ccf6e66b5f7df40bc06cd3595908a5, type: 3}
+  - {fileID: 4264330830217870136, guid: da0438332f8289948a984eac41807299, type: 3}
+  - {fileID: 1001085444461773898, guid: fee986deb3abbf244aaac48c6528b1f7, type: 3}
+  - {fileID: 4432914681401097883, guid: 255c14cbf0985844e9076a949264ca97, type: 3}
