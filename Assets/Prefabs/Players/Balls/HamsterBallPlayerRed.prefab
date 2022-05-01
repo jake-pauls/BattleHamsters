@@ -1,63 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2826443098704187197
+--- !u!1001 &6913897337237382347
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.03
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.5455737
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574841, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508915, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574845, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
-      propertyPath: m_Name
-      value: HamsterBallPlayerRed
-      objectReference: {fileID: 0}
-    - target: {fileID: 891901980805574847, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508917, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a520047345a836d49b8263c8761b5fd4, type: 2}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3c975ec8a626ab041a90c3906c6ed8d4, type: 3}
+    - target: {fileID: 1815136033075508919, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
+      propertyPath: m_Name
+      value: HamsterBallPlayerRed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815136033075508919, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHamsterBall
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1815136033075508912, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: d31d1887b8943c2499144ad26577c0d5, type: 3}
