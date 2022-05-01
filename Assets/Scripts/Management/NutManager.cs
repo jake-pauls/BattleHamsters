@@ -36,9 +36,7 @@ public class NutManager : MonoBehaviour {
         StartCoroutine(NutCooldown());
     }
 
-    public void CollectNut() {
-        NumberOfSpawnedNuts--;
-    }
+    public void CollectNut() => NumberOfSpawnedNuts--;
 
     IEnumerator NutCooldown() {
         yield return new WaitForSeconds(_spawnRate);

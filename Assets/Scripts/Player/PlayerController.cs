@@ -78,12 +78,15 @@ public class PlayerController : MonoBehaviour {
         // if (_interactAction.triggered)
 
         if (_dropNutAction.triggered && NutCount > 0) {
-            PlayerSpeed += NutCount / 2.0f;
+            PlayerSpeed += 0.5f;
 
             NutCount--;
             Vector3 newPos = transform.position - transform.right;
             Instantiate(NutPrefab, newPos, Quaternion.identity);
         }
+
+        if (PlayerSpeed <= 0.0f)
+            PlayerSpeed = 0.5f;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
