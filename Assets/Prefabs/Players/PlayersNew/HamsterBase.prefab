@@ -521,10 +521,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3200926653391991290}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &3565027503133421371
@@ -1103,6 +1103,7 @@ GameObject:
   - component: {fileID: 7288047323661076765}
   - component: {fileID: 7288047323661076766}
   - component: {fileID: 7288047323661076762}
+  - component: {fileID: 4760861815443153587}
   m_Layer: 0
   m_Name: HamsterBase
   m_TagString: Untagged
@@ -1203,6 +1204,7 @@ MonoBehaviour:
   _enterBallEffect: {fileID: 0}
   _enterBallEventName: 
   _jumpHeight: 500
+  pid: 0
 --- !u!114 &7288047323661076766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,6 +1247,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03072bf0a7db7c0488b32d8369104579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4760861815443153587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8828934262471164192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42bb0362ef9bb7b4897aecc63479b08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSquishScale_Y: 0.05
+  ballKillVelThreshold: 2
+  reviveCooldown: 3
 --- !u!1 &9027350736280930437
 GameObject:
   m_ObjectHideFlags: 0

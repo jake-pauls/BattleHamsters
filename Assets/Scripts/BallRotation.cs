@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,6 @@ using UnityEngine.VFX;
 
 public class BallRotation : MonoBehaviour
 {
-
     private Vector2 _moveInput;
     private Vector3 _movementInput;
     private Rigidbody _rb;
@@ -18,14 +18,20 @@ public class BallRotation : MonoBehaviour
     [SerializeField] private float _rollSpeed;
     [SerializeField] private float _rollAcceleration;
     [SerializeField] private float _torqueMultiplier;
-    [SerializeField] private float _interactionRadius =3f;
+    [SerializeField] private float _interactionRadius = 3f;
     private bool _groundedPlayer;
     public GameObject _ball;
     [SerializeField] private VisualEffect _enterBallEffect;
     [SerializeField] private string _enterBallEventName;
     [SerializeField] private float _jumpHeight;
-    private float _turnSpeed =10f;
+    private float _turnSpeed = 10f;
     public int pid;
+    private HamsterHealth hamHealth;
+
+    private void Awake()
+    {
+        hamHealth = GetComponent<HamsterHealth>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +52,6 @@ public class BallRotation : MonoBehaviour
     public void OnMove(InputValue value)
     {
         _moveInput = value.Get<Vector2>();
-        
     }
 
     private void FixedUpdate()
@@ -69,25 +74,22 @@ public class BallRotation : MonoBehaviour
             _rb.AddForce(finalAcceleration);
         }
 
-
         Vector3 LookDirection = new Vector3(_moveInput.x, 0f, _moveInput.y).normalized;
         float turnDirection = -Mathf.Sign(Vector3.Cross(_movementInput, transform.forward).y);
         float turnMagnitude = 1f - Mathf.Clamp01(Vector3.Dot(transform.forward, LookDirection));
         if (_moveInput.magnitude < 0.1f) turnMagnitude = 0f;
         float angularVelocity = turnMagnitude * _turnSpeed * turnDirection;
         _rb.angularVelocity = new Vector3(0f, angularVelocity, 0f);
-
-
     }
 
     public void BallTorque()
     {
-            Rigidbody rb = _ball.GetComponent<Rigidbody>();
-            Vector3 targetAcceleration = _movementInput * _rollSpeed;
-            Vector3 currentAcceleration = rb.velocity;
-            Vector3 finalAcceleration = (targetAcceleration - currentAcceleration) * _rollAcceleration;
-            Vector3 Torque = Vector3.Cross(Vector3.up, finalAcceleration);
-            rb.AddTorque(Torque * _torqueMultiplier);
+        Rigidbody rb = _ball.GetComponent<Rigidbody>();
+        Vector3 targetAcceleration = _movementInput * _rollSpeed;
+        Vector3 currentAcceleration = rb.velocity;
+        Vector3 finalAcceleration = (targetAcceleration - currentAcceleration) * _rollAcceleration;
+        Vector3 Torque = Vector3.Cross(Vector3.up, finalAcceleration);
+        rb.AddTorque(Torque * _torqueMultiplier);
     }
     //public void OnFire()
     //{
@@ -109,7 +111,10 @@ public class BallRotation : MonoBehaviour
         _ballMode = true;
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
+
+        _ball.tag = "PlayerHamsterBall";
     }
+
     public void OnUnmount()
     {
         gameObject.transform.SetParent(null);
@@ -118,14 +123,15 @@ public class BallRotation : MonoBehaviour
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
 
+        _ball.tag = "HamsterBall";
+
         StartCoroutine(resetRotation());
     }
 
     IEnumerator resetRotation()
     {
         yield return new WaitForSeconds(0.5f);
-        transform.rotation = Quaternion.Euler(new Vector3 (0, transform.rotation.eulerAngles.y, 0));
-
+        transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
     }
 
     public void OnJump()
@@ -136,7 +142,8 @@ public class BallRotation : MonoBehaviour
         }
     }
 
-    bool IsGrounded() {
+    bool IsGrounded()
+    {
         return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
 
@@ -149,27 +156,29 @@ public class BallRotation : MonoBehaviour
             if (c.tag == "HamsterBall")
             {
                 _ball = c.gameObject;
-                    if (!_ballMode)
-                        OnMount();
-                    else OnUnmount();
-                   GetComponent<Animator>().SetTrigger("Interact");
-                   _enterBallEffect.SendEvent(_enterBallEventName);
+                if (!_ballMode)
+                    OnMount();
+                else OnUnmount();
+                GetComponent<Animator>().SetTrigger("Interact");
+                if (_enterBallEffect) _enterBallEffect.SendEvent(_enterBallEventName);
                 break;
             }
         }
     }
 
-    private void OnCollisionEnter(Collision collision) {
-       if (collision.gameObject.CompareTag("Player")) {
-            Rigidbody otherrb = collision.rigidbody;
-            // kewk
-            FlattenHamster(otherrb.gameObject);
-        }
-    }
-
-    public void FlattenHamster(GameObject otherHamster) {
-        // Kewk
-        otherHamster.gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 1f);
-    }
-
+    // private void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Player"))
+    //     {
+    //         Rigidbody otherrb = collision.rigidbody;
+    //         // kewk
+    //         FlattenHamster(otherrb.gameObject);
+    //     }
+    // }
+    //
+    // public void FlattenHamster(GameObject otherHamster)
+    // {
+    //     // Kewk
+    //     otherHamster.gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 1f);
+    // }
 }
