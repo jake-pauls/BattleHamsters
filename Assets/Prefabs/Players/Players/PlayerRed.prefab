@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7214727517711615398}
+  - {fileID: 686037204382017626}
   - {fileID: 2452974746486383863}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,7 +53,7 @@ CharacterController:
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 10.8
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.23, z: 0}
 --- !u!114 &408815930399398919
 MonoBehaviour:
@@ -111,7 +111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pid: 0
-  _playerSpeed: 2
+  NutCount: 0
+  NutPrefab: {fileID: 1792793853396503825, guid: d70187509926ee74090c73af94089a9a, type: 3}
+  PlayerSpeed: 6
   _playerDefaultSpeed: 2
   _jumpHeight: 1
   _gravityValue: -9.81
@@ -175,11 +177,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5099113154340164220, guid: e9e9d8da76195ae45a57bd5d9c8bf405, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9e9d8da76195ae45a57bd5d9c8bf405, type: 3}
---- !u!4 &7214727517711615398 stripped
+--- !u!4 &686037204382017626 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3123570859252137860, guid: e9e9d8da76195ae45a57bd5d9c8bf405, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5099113154340164216, guid: e9e9d8da76195ae45a57bd5d9c8bf405, type: 3}
   m_PrefabInstance: {fileID: 5712529524488665634}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5712529524544233152

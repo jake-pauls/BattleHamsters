@@ -53,6 +53,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropNut"",
+                    ""type"": ""Button"",
+                    ""id"": ""111a5a4e-bf4e-43d4-bea9-f5bf889d0ac7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +97,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""280a3b5e-52ab-420a-9e51-b7de1709261b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DropNut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +119,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Ground_Move = m_Ground.FindAction("Move", throwIfNotFound: true);
         m_Ground_Jump = m_Ground.FindAction("Jump", throwIfNotFound: true);
         m_Ground_Interact = m_Ground.FindAction("Interact", throwIfNotFound: true);
+        m_Ground_DropNut = m_Ground.FindAction("DropNut", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,6 +182,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Ground_Move;
     private readonly InputAction m_Ground_Jump;
     private readonly InputAction m_Ground_Interact;
+    private readonly InputAction m_Ground_DropNut;
     public struct GroundActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -168,6 +190,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Ground_Move;
         public InputAction @Jump => m_Wrapper.m_Ground_Jump;
         public InputAction @Interact => m_Wrapper.m_Ground_Interact;
+        public InputAction @DropNut => m_Wrapper.m_Ground_DropNut;
         public InputActionMap Get() { return m_Wrapper.m_Ground; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -186,6 +209,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnInteract;
+                @DropNut.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnDropNut;
+                @DropNut.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnDropNut;
+                @DropNut.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnDropNut;
             }
             m_Wrapper.m_GroundActionsCallbackInterface = instance;
             if (instance != null)
@@ -199,6 +225,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @DropNut.started += instance.OnDropNut;
+                @DropNut.performed += instance.OnDropNut;
+                @DropNut.canceled += instance.OnDropNut;
             }
         }
     }
@@ -208,5 +237,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnDropNut(InputAction.CallbackContext context);
     }
 }
