@@ -13,6 +13,6 @@ public class NutFunctions : MonoBehaviour
 
     private void FindPlayer()
     {
-        Collider[] col = Physics.OverlapSphere(transform.position, _radius)
+        //Collider[] col = Physics.OverlapSphere(transform.position, _radius);
     }
 }
