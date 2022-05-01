@@ -49,6 +49,7 @@ MonoBehaviour:
   _spawnRate: 5
   _nutPrefab: {fileID: 1792793853396503825, guid: d70187509926ee74090c73af94089a9a, type: 3}
   _nutSpawnPoint: {fileID: 8436422685307411774}
+  _spawnRandomnessOffset: 3
   NumberOfSpawnedNuts: 0
 --- !u!1 &8436422685307411775
 GameObject:
