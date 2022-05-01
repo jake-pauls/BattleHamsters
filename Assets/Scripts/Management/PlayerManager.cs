@@ -35,10 +35,10 @@ public class PlayerManager : MonoBehaviour {
         }
 
         // CharacterController must be disabled when manually manipulating a character transform
-        playerInstance.GetComponent<CharacterController>().enabled = false;
+        playerInstance.GetComponent<HamsterController>().enabled = false;
         playerInstance.transform.position = _spawnPoints[_nextSpawnIndex].position;
         playerInstance.transform.rotation = _spawnPoints[_nextSpawnIndex].rotation;
-        playerInstance.GetComponent<CharacterController>().enabled = true;
+        playerInstance.GetComponent<HamsterController>().enabled = true;
 
         // Increment so player position moves to the next spawn
         _nextSpawnIndex++;
@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour {
         var spawnedPlayer = playerInput.gameObject;
 
         // Give spawned player an id based on their spawn index [0 -> 3]
-        spawnedPlayer.GetComponent<PlayerController>().pid = _nextSpawnIndex;
+        spawnedPlayer.GetComponent<HamsterController>().pid = _nextSpawnIndex;
 
         SpawnPlayer(spawnedPlayer);
 

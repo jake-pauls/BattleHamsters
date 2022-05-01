@@ -12,11 +12,12 @@ public class BallController : MonoBehaviour
     
     private void Awake()
     {
+        var camTrans = Camera.main.transform;
         _ballRigid = GetComponent<Rigidbody>();
     }
 
     public void OnMove(Vector2 input)
     {
-        _ballRigid.AddTorque(new Vector3(input.x, 0, input.y) * (Time.fixedDeltaTime * torqueSpeedPerSec) * maxTorque);
+        _ballRigid.AddTorque(new Vector3(input.x, 0, input.y) * (torqueSpeedPerSec) * maxTorque);
     }
 }

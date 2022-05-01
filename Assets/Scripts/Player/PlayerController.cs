@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour {
     private InputAction _interactAction;
 
     PlayerModelManager playerModelManager;
+    [SerializeField] private Transform hamTrans;
+    
     private void Start() {
         _controller = GetComponent<CharacterController>();
         _playerInput = GetComponent<PlayerInput>();
@@ -47,27 +49,34 @@ public class PlayerController : MonoBehaviour {
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = move.x * _cameraTransform.right.normalized + move.z * _cameraTransform.forward.normalized;
         move.y = 0f;
-        _controller.Move(move * Time.deltaTime * _playerSpeed);
-
-        // Changes the height position of the player
-        if (_jumpAction.triggered && _groundedPlayer)
-            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -8.0f * _gravityValue);
-
-        if (_interactAction.triggered && this.transform.GetChild(0).gameObject.activeSelf) {
-            playerModelManager.HideObject(false, this.transform.position);
+        if (isBallActive)
+        {
+                        
         }
+        else
+        {
+            _controller.Move(move * Time.deltaTime * _playerSpeed);
+
+            // Changes the height position of the player
+            if (_jumpAction.triggered && _groundedPlayer)
+                _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -8.0f * _gravityValue);
+
+            if (_interactAction.triggered && this.transform.GetChild(0).gameObject.activeSelf) {
+                playerModelManager.HideObject(false, this.transform.position);
+            }
         
-        // Bring the player back down to the ground
-        _playerVelocity.y += -35.0f * Time.deltaTime;
+            // Bring the player back down to the ground
+            _playerVelocity.y += -35.0f * Time.deltaTime;
 
-        _controller.Move(_playerVelocity * Time.deltaTime);
+            _controller.Move(_playerVelocity * Time.deltaTime);
 
-        // Rotate in the direction of input
-        if (move != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(move);
+            // Rotate in the direction of input
+            if (move != Vector3.zero)
+                transform.rotation = Quaternion.LookRotation(move);
 
-        // Check if interact action was triggered 
-        // if (_interactAction.triggered)
+            // Check if interact action was triggered 
+            // if (_interactAction.triggered)   
+        }
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
@@ -78,9 +87,14 @@ public class PlayerController : MonoBehaviour {
             Rigidbody otherrb = hit.collider.attachedRigidbody;
             //Debug.Log(otherrb.velocity);
             Destroy(otherrb.gameObject);
-            playerModelManager.HideObject(true, otherrb.transform.position);
 
-
+            // mount the ball
+            isBallActive = true;
+            hamTrans.gameObject.SetActive(false);
+            transform.SetParent(hit.transform);
+            Physics.IgnoreCollision(hit.collider, GetComponent<CharacterController>());
+            GetComponent<Rigidbody>().velocity =Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
             //this.ballState = BallStates.COLLISION;
             //if (otherrb.velocity == new Vector3(0, 0, 0))
@@ -94,8 +108,11 @@ public class PlayerController : MonoBehaviour {
             //Vector3 velocity = otherrb.velocity;
             //// Could also add some kind of reduction like friction here
             //Debug.Log(collision.impulse); // Could also just use impulse as well 
-            /*otherrb*//*.AddForce(-new Vector3() * this.mass);*/
+            /*otherrb*/ /*.AddForce(-new Vector3() * this.mass);*/
             //otherrb.AddExplosionForce(100, new Vector3(), 5);
         }
     }
+
+
+    private bool isBallActive;
 }
