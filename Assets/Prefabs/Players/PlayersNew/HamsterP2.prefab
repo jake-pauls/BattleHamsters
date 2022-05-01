@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7288047323661076765, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
+      propertyPath: _jumpHeight
+      value: 350
+      objectReference: {fileID: 0}
     - target: {fileID: 7288047323661076767, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
       propertyPath: m_Height
       value: 3
