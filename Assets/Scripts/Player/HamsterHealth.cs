@@ -16,6 +16,7 @@ public class HamsterHealth : MonoBehaviour
 
     [SerializeField] private float targetSquishScale_Y = 0.05f;
     [SerializeField] private float ballKillVelThreshold = 2f;
+    [SerializeField] private ParticleSystem squishEffect;
     
     [SerializeField]
     private float reviveCooldown = 3f;
@@ -26,6 +27,7 @@ public class HamsterHealth : MonoBehaviour
     private void Start()
     {
         _capturedScale = transform.localScale;
+        squishEffect.gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -86,6 +88,9 @@ public class HamsterHealth : MonoBehaviour
     private IEnumerator TriggerSquishEffect()
     {
         if(isDirty_Dead) yield break;
+        squishEffect.gameObject.SetActive(true);
+        squishEffect.Stop();
+        squishEffect.Play();
         float capturedY = transform.localPosition.y;
         float y_Offset = GetComponent<CapsuleCollider>().height / 2 * transform.localScale.y;
         var interval = 0.033f;
