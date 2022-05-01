@@ -19,6 +19,7 @@ public class BallRotation : MonoBehaviour
     [SerializeField] private float _rollAcceleration;
     [SerializeField] private float _torqueMultiplier;
     [SerializeField] private float _interactionRadius =3f;
+    private bool _groundedPlayer;
     public GameObject _ball;
     [SerializeField] private VisualEffect _enterBallEffect;
     [SerializeField] private string _enterBallEventName;
@@ -127,10 +128,14 @@ public class BallRotation : MonoBehaviour
 
     public void OnJump()
     {
-        if (!_ballMode)
+        if (!_ballMode && IsGrounded())
         {
             _rb.AddForce(Vector3.up * _jumpHeight);
         }
+    }
+
+    bool IsGrounded() {
+        return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
 
 
@@ -150,9 +155,19 @@ public class BallRotation : MonoBehaviour
                 break;
             }
         }
-
     }
 
+    private void OnCollisionEnter(Collision collision) {
+       if (collision.gameObject.CompareTag("Player")) {
+            Rigidbody otherrb = collision.rigidbody;
+            // kewk
+            FlattenHamster(otherrb.gameObject);
+        }
+    }
 
+    public void FlattenHamster(GameObject otherHamster) {
+        // Kewk
+        otherHamster.gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 1f);
+    }
 
 }

@@ -28,7 +28,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
             ""id"": ""8964c84a-7ebf-4023-9b9c-c9bd93045d4e"",
             ""actions"": [
                 {
-                    ""name"": ""Movement"",
+                    ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""ab785b69-a813-4567-90c2-f385293a9f00"",
                     ""expectedControlType"": ""Vector2"",
@@ -63,7 +63,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -96,7 +96,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
 }");
         // Ground
         m_Ground = asset.FindActionMap("Ground", throwIfNotFound: true);
-        m_Ground_Movement = m_Ground.FindAction("Movement", throwIfNotFound: true);
+        m_Ground_Move = m_Ground.FindAction("Move", throwIfNotFound: true);
         m_Ground_Jump = m_Ground.FindAction("Jump", throwIfNotFound: true);
         m_Ground_Interact = m_Ground.FindAction("Interact", throwIfNotFound: true);
     }
@@ -158,14 +158,14 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     // Ground
     private readonly InputActionMap m_Ground;
     private IGroundActions m_GroundActionsCallbackInterface;
-    private readonly InputAction m_Ground_Movement;
+    private readonly InputAction m_Ground_Move;
     private readonly InputAction m_Ground_Jump;
     private readonly InputAction m_Ground_Interact;
     public struct GroundActions
     {
         private @PlayerInputActions m_Wrapper;
         public GroundActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Ground_Movement;
+        public InputAction @Move => m_Wrapper.m_Ground_Move;
         public InputAction @Jump => m_Wrapper.m_Ground_Jump;
         public InputAction @Interact => m_Wrapper.m_Ground_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Ground; }
@@ -177,9 +177,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_GroundActionsCallbackInterface != null)
             {
-                @Movement.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnMovement;
-                @Movement.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnMovement;
-                @Movement.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnMovement;
+                @Move.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnMove;
                 @Jump.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnJump;
@@ -190,9 +190,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
             m_Wrapper.m_GroundActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Movement.started += instance.OnMovement;
-                @Movement.performed += instance.OnMovement;
-                @Movement.canceled += instance.OnMovement;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -205,7 +205,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public GroundActions @Ground => new GroundActions(this);
     public interface IGroundActions
     {
-        void OnMovement(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }
