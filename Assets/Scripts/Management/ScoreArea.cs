@@ -14,8 +14,10 @@ public class ScoreArea : MonoBehaviour {
 
             CurrentScore += _playerReference.NutCount;
 
-            for (int i = 0; i < _playerReference.NutCount; i++)
+            for (int i = 0; i < _playerReference.NutCount; i++) {
                 _playerReference.PlayerSpeed += 0.5f;
+                _nutManager.CollectNut();
+            }
 
             _playerReference.NutCount = 0;
         }
