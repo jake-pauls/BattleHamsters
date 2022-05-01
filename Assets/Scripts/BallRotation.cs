@@ -7,6 +7,8 @@ using UnityEngine.VFX;
 
 public class BallRotation : MonoBehaviour
 {
+    public bool inputDisabled;
+    
     private Vector2 _moveInput;
     private Vector3 _movementInput;
     private Rigidbody _rb;
@@ -51,7 +53,7 @@ public class BallRotation : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        _moveInput = value.Get<Vector2>();
+        _moveInput = inputDisabled ? Vector2.zero : value.Get<Vector2>();
     }
 
     private void FixedUpdate()
@@ -136,6 +138,8 @@ public class BallRotation : MonoBehaviour
 
     public void OnJump()
     {
+        if (inputDisabled) return;
+        
         if (!_ballMode && IsGrounded())
         {
             _rb.AddForce(Vector3.up * _jumpHeight);
@@ -150,6 +154,8 @@ public class BallRotation : MonoBehaviour
 
     public void OnInteract()
     {
+        if (inputDisabled) return;
+        
         Collider[] col = Physics.OverlapSphere(transform.position, _interactionRadius);
         foreach (Collider c in col)
         {

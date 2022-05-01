@@ -49,6 +49,9 @@ public class HamsterHealth : MonoBehaviour
         var capturedVel = ballRigid.velocity.magnitude;
         Debug.Log($"Ball velocity = {capturedVel}");
         if (capturedVel < ballKillVelThreshold) return;
+        
+        // disable input
+        GetComponent<BallRotation>().inputDisabled = true;
 
         // trigger revive cooldown
         StartCoroutine(TryRevive());
@@ -109,6 +112,9 @@ public class HamsterHealth : MonoBehaviour
         Transform spawnTrans = PlayerManager.Instance.SpawnPoint(GetComponent<BallRotation>().pid);
         transform.position = spawnTrans.position;
         transform.rotation = spawnTrans.rotation;
+        
+        // reset input
+        GetComponent<BallRotation>().inputDisabled = false;
         
         isDirty_Dead = false;
     }
