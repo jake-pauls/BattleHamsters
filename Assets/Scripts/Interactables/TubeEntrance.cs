@@ -19,7 +19,10 @@ public class TubeEntrance : MonoBehaviour, IInteractable
     //todo if a ham -> pop up a UI
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"{other.gameObject.name} is NEAR the tube area");        
+        Debug.Log($"{other.gameObject.name} is NEAR the tube area");
+        
+        if(IsInteractable(other.gameObject))
+            TryInteract(other.gameObject);
     }
 
     //todo remove the pop-up UI

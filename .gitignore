@@ -10,6 +10,11 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
+# Project Setting Package settings
+/[Pp]rojectSettings/Packages/com.unity.probuilder/
+/[Pp]rojectSettings/Packages/com.unity.progrids/
+/[Pp]rojectSettings/Packages/com.unity.polybrush/
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
