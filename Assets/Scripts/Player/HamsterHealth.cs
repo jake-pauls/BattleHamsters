@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BallRotation), typeof(CapsuleCollider))]
 public class HamsterHealth : MonoBehaviour
 {
+    public UnityEvent<HamsterHealth, string> OnDead;
+
     [NonSerialized]public bool IsInvulnerable;
 
     public bool IsDead => isDirty_Dead;
@@ -54,13 +57,13 @@ public class HamsterHealth : MonoBehaviour
         StartCoroutine(TriggerSquishEffect());
         
         // mark invulnerable
-        SetOnDead(true);
+        UpdateCollision(true);
         
         //IMPORTANT mark dirty
         isDirty_Dead = true;
     }
 
-    private void SetOnDead(bool inDead)
+    private void UpdateCollision(bool inDead)
     {
         // GetComponent<Rigidbody>().detectCollisions = !inDead;
         // GetComponent<Rigidbody>().useGravity = !inDead;
@@ -100,7 +103,12 @@ public class HamsterHealth : MonoBehaviour
     {
         transform.localScale = _capturedScale;
         
-        SetOnDead(false);
+        UpdateCollision(false);
+        
+        // reset location to the spawning point
+        Transform spawnTrans = PlayerManager.Instance.SpawnPoint(GetComponent<BallRotation>().pid);
+        transform.position = spawnTrans.position;
+        transform.rotation = spawnTrans.rotation;
         
         isDirty_Dead = false;
     }
