@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour {
     private float _gravityValue = -9.81f;
     [SerializeField]
     private float _rotationSpeed = 1000f;
+    [SerializeField] private float _rollSpeed;
+    [SerializeField] private float _rollAcceleration;
+    [SerializeField] private float _torqueMultiplier;
 
     private CharacterController _controller;
     private Vector3 _playerVelocity;
@@ -31,6 +34,10 @@ public class PlayerController : MonoBehaviour {
     private InputAction _jumpAction;
     private InputAction _interactAction;
     private InputAction _dropNutAction;
+    private Vector2 _moveInput;
+    private Vector3 _movementInput => new Vector3(_moveInput.x, 0f, _moveInput.y).normalized;
+    private GameObject _ball;
+    private bool _onBall;
 
     PlayerModelManager playerModelManager;
 
@@ -74,44 +81,60 @@ public class PlayerController : MonoBehaviour {
         if (move != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(move);
 
+        // Check if interact action was triggered 
+        // if (_interactAction.triggered)
+
         if (_dropNutAction.triggered && NutCount > 0) {
-            PlayerSpeed += 0.5f;
+            PlayerSpeed += NutCount / 2.0f;
 
             NutCount--;
-            Vector3 newPos = transform.position - (transform.right * 2.0f);
+            Vector3 newPos = transform.position - transform.right;
             Instantiate(NutPrefab, newPos, Quaternion.identity);
         }
-
-        if (PlayerSpeed <= 0.0f)
-            PlayerSpeed = 0.01f;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.transform.tag == "HamsterBall")
-        {
-            //Debug.Log("hit");
-            Rigidbody otherrb = hit.collider.attachedRigidbody;
-            //Debug.Log(otherrb.velocity);
-            Destroy(otherrb.gameObject);
-            playerModelManager.HideObject(true, otherrb.transform.position);
 
+        if (hit.transform.tag == "HamsterBall") {
+            _ball = hit.gameObject;
+            Physics.IgnoreCollision(_ball.GetComponent<Collider>(), GetComponent<Collider>(), true);
+            _ball.transform.SetParent(gameObject.transform);
+            gameObject.transform.localPosition = _ball.transform.position;
+            gameObject.transform.localRotation = _ball.transform.rotation;
 
+        }
 
-            //this.ballState = BallStates.COLLISION;
-            //if (otherrb.velocity == new Vector3(0, 0, 0))
-            //{
-            //    this.ballState = BallStates.IDLE;
-            //}
+        //{
+        //    Rigidbody otherrb = hit.collider.attachedRigidbody;
+        //    Destroy(otherrb.gameObject);
+        //    playerModelManager.HideObject(true, otherrb.transform.position);
+        //}
 
+        //if (hit.transform.tag == "Player" && this.transform.GetChild(0).gameObject.activeSelf) {
+        //    Rigidbody otherrb = hit.collider.attachedRigidbody;
+        //    Destroy(otherrb.gameObject);
+        //}
+    }
 
-            //// Can make a formula here to adjust for mass, speed etc
-            //// Maybe want to use your own balls velocity here instead of the other balls velocity or some kind of combination of both
-            //Vector3 velocity = otherrb.velocity;
-            //// Could also add some kind of reduction like friction here
-            //Debug.Log(collision.impulse); // Could also just use impulse as well 
-            /*otherrb*//*.AddForce(-new Vector3() * this.mass);*/
-            //otherrb.AddExplosionForce(100, new Vector3(), 5);
+    public void OnMove(InputValue value) {
+        _moveInput = value.Get<Vector2>();
+        
+    }
+
+    private void FixedUpdate() {
+        if(_onBall) {
+            Rigidbody rb = _ball.GetComponent<Rigidbody>();
+            Vector3 targetAcceleration = _movementInput * _rollSpeed;
+            Vector3 currentAcceleration = rb.velocity;
+            Vector3 finalAcceleration = (targetAcceleration - currentAcceleration) * _rollAcceleration;
+            Vector3 Torque = Vector3.Cross(Vector3.up, finalAcceleration);
+            rb.AddTorque(Torque * _torqueMultiplier);
+            transform.position = _ball.transform.position;
+        } else {
+
         }
     }
+
+
 }
