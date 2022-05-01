@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class NutBehaviour : MonoBehaviour {
     [SerializeField]
-    private GameObject _parentNut;
+    private NutFunctions nf;
 
     private PlayerController _playerController = null;
 
     private void OnTriggerEnter(Collider col) {
-        if (col.gameObject.tag == "Player" && GetComponentInParent<NutFunctions>()._canTriggerFind) {
-            NutFunctions nf = GetComponentInParent<NutFunctions>();
+        if (col.gameObject.tag == "Player" && nf._canTriggerFind) {
+            
                 nf.OnAttachedToPlayer();
             nf.SetTargetBool(true);
             nf.SetTargetLocation();

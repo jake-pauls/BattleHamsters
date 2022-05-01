@@ -9,17 +9,15 @@ public class NutFunctions : MonoBehaviour
     [SerializeField] private float _speed = 1f;
     [SerializeField] private float _dropHeight = 5f;
     [SerializeField] private float _dropRadius = 5f;
+    [SerializeField] private float _gainRadius = 1f;
     private Transform _targetTransform;
     private int _targetindex;
     [SerializeField]private float _timeBeforeAbleToPickAgain = 5f;
     private IEnumerator _coroutine;
     public bool _canTriggerFind = true;
     private float _dropForceScale;
+    private PlayerController _playerController = null;
 
-    private void Start()
-    {
-        
-    }
     public void NutsPickUp()
     {
         //takes nut position and lerps between nut and player
@@ -27,18 +25,47 @@ public class NutFunctions : MonoBehaviour
         StartCoroutine(_coroutine);
     }
 
+    public void HitPlayer()
+    {
+        //check distance
+        if (!((_targetTransform.transform.position - transform.position).magnitude < _gainRadius)) return;
+        
+        //stopdrawing nuts toward player
+        StopCoroutine(_coroutine);
+        //attac to player
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        transform.SetParent(_targetTransform.transform);
+        _targetTransform.GetComponentInParent<CarryNutPositions>().IsOccupied[_targetindex] = true;
+        transform.position = _targetTransform.position;
+        transform.rotation = _targetTransform.rotation;
+        _canTriggerFind = false;
+
+        //increase nut count
+        //_playerController = _targetTransform.GetComponentInParent<PlayerController>();
+        //_playerController.NutCount++;
+
+    }
+
+    public void DropNuts()
+    {
+        _targetTransform.GetComponentInParent<CarryNutPositions>().IsOccupied[_targetindex] = false;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        transform.SetParent(null);
+        Vector3 dropforce = new Vector3(Random.Range(-_dropRadius, _dropRadius), Random.Range(10f, 15f) * _dropHeight, Random.Range(-_dropRadius, _dropRadius));
+        GetComponent<Rigidbody>().AddForce(dropforce * _dropForceScale);
+        StartCoroutine(resetTrigger());
+    }
     IEnumerator PickUpAnimation(float distance)
     {
-        while (Vector3.Distance(transform.position, _targetTransform.position) > 2f && _canTriggerFind)
+        while (Vector3.Distance(transform.position, _targetTransform.position) > 2f)
         {
             float currentDistanceToPlayer = (_targetTransform.position - transform.position).magnitude;
             float height = Mathf.Sin(currentDistanceToPlayer * Mathf.PI / distance) * _pickUpHeightScale;
             Vector3 targetFlattenedPosition = (_targetTransform.position - transform.position).normalized;
-            Vector3 targetVelocity = new Vector3(targetFlattenedPosition.x, height, targetFlattenedPosition.z);
+            Vector3 targetVelocity = new Vector3(targetFlattenedPosition.x, height + targetFlattenedPosition.y, targetFlattenedPosition.z);
             GetComponent<Rigidbody>().AddForce(targetVelocity * _speed);
             yield return null;
         }
-        _canTriggerFind = false;
 
     }
 
@@ -50,11 +77,11 @@ public class NutFunctions : MonoBehaviour
 
     private bool FindPlayer()
     {
-
         if (!_canTriggerFind) return false;
         //detect any collider in Hamster layer (layer3)
         Collider[] detectColliders = new Collider[4];
         int numColliders = Physics.OverlapSphereNonAlloc(transform.position, _detectPlayerRadius, detectColliders, 1<<3);
+        Debug.Log(this.gameObject);
 
         if (numColliders == 0) return false;
         foreach (Collider c in detectColliders)
@@ -73,8 +100,14 @@ public class NutFunctions : MonoBehaviour
     }
 
     private void Update()
-    {        
-        if (FindPlayer()) NutsPickUp();
+    {
+        if (FindPlayer())
+        { 
+            NutsPickUp();
+
+            HitPlayer();
+
+                }
 
 
         if(Input.GetKeyDown("g"))
@@ -83,16 +116,6 @@ public class NutFunctions : MonoBehaviour
         }
     }
 
-    public void DropNuts()
-    {
-        SetTargetBool(false);
-        GetComponentInChildren<NutBehaviour>().enabled = true;
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        transform.SetParent(null);
-        Vector3 dropforce = new Vector3(Random.Range(-_dropRadius, _dropRadius), Random.Range(10f, 15f) * _dropHeight, Random.Range(-_dropRadius, _dropRadius));
-        GetComponent<Rigidbody>().AddForce(dropforce * _dropForceScale);
-        StartCoroutine(resetTrigger());
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
