@@ -121,7 +121,6 @@ public class BallRotation : MonoBehaviour {
 
     public void OnUnmount() {
         gameObject.transform.SetParent(null);
-        if (!_ball) return;
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), false);
         _ballMode = false;
         _rb.velocity = Vector3.zero;
@@ -154,7 +153,7 @@ public class BallRotation : MonoBehaviour {
     public void OnInteract() {
         if (inputDisabled) return;
 
-        if (!_ballMode && IsGrounded() && _ball) {
+        if (!_ballMode && IsGrounded()) {
             Collider[] col = Physics.OverlapSphere(transform.position, _interactionRadius);
             foreach (Collider c in col) {
                 if (c.tag == "HamsterBall") {
