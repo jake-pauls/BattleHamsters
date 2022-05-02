@@ -55,7 +55,8 @@ public class Tube : MonoBehaviour
     private void OnInteractionFinished(GameObject hamObj)
     {        
         Assert.IsNotNull(hamObj, "Cannot reset player input, since hamObj is null.");
-        
+        hamObj.transform.rotation = Quaternion.identity;
+        _currentHam = null;
         //todo reset input, physics and collision check perhaps
         // hamObj.GetComponent<PlayerInput>().enabled = true;
     }

@@ -21,6 +21,7 @@ public class BallRotation : MonoBehaviour {
     [SerializeField] private float _rollAcceleration;
     [SerializeField] private float _torqueMultiplier;
     [SerializeField] private float _interactionRadius = 3f;
+    [SerializeField] public ParticleSystem dustTrail;
     private bool _groundedPlayer;
     public GameObject _ball;
     [SerializeField] private VisualEffect _enterBallEffect;
@@ -48,6 +49,7 @@ public class BallRotation : MonoBehaviour {
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _rb.useGravity = false;
         _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        dustTrail.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -66,6 +68,7 @@ public class BallRotation : MonoBehaviour {
         if (_ballMode) {
             BallTorque();
             transform.position = _ball.transform.position + ballOffset;
+            dustTrail.gameObject.SetActive(true);
         } else {
             Vector3 up = Vector3.up;
             Vector3 right = Camera.main.transform.right;
@@ -150,7 +153,7 @@ public class BallRotation : MonoBehaviour {
     public void OnInteract() {
         if (inputDisabled) return;
 
-        if (!_ballMode) {
+        if (!_ballMode && IsGrounded()) {
             Collider[] col = Physics.OverlapSphere(transform.position, _interactionRadius);
             foreach (Collider c in col) {
                 if (c.tag == "HamsterBall") {
@@ -158,11 +161,15 @@ public class BallRotation : MonoBehaviour {
                     OnMount();
                     GetComponent<Animator>().SetTrigger("Interact");
                     if (_enterBallEffect) _enterBallEffect.SendEvent(_enterBallEventName);
+                    dustTrail.Stop();
+                    dustTrail.Play();
                     break;
                 }
             }
         }
         else {
+            dustTrail.Stop();
+            dustTrail.Play();
             OnUnmount();
         }
 
