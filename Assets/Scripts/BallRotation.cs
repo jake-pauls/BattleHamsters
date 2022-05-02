@@ -120,6 +120,7 @@ public class BallRotation : MonoBehaviour {
     }
 
     public void OnUnmount() {
+        if (!_ball) return;
         gameObject.transform.SetParent(null);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), false);
         _ballMode = false;
