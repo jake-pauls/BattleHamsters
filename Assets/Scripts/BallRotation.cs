@@ -168,13 +168,11 @@ public class BallRotation : MonoBehaviour {
                 }
             }
         }
-        else {
+        else if (_ballMode) {
             dustTrail.Stop();
             dustTrail.Play();
             OnUnmount();
         }
-
-
     }
 
     public void OnDropNut() {
