@@ -7,7 +7,6 @@ public class NutBehaviour : MonoBehaviour {
     private BallRotation _playerController = null;
 
     private void OnTriggerEnter(Collider col) {
-        Debug.Log("Trigger");
         if (col.gameObject.tag == "Player") {
             _playerController = col.gameObject.GetComponent<BallRotation>();
             _playerController.NutCount++;
