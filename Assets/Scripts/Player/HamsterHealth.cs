@@ -88,9 +88,10 @@ public class HamsterHealth : MonoBehaviour
     private IEnumerator TriggerSquishEffect()
     {
         if(isDirty_Dead) yield break;
-        squishEffect.gameObject.SetActive(true);
+        if (!squishEffect.gameObject.activeSelf) squishEffect.gameObject.SetActive(true);
         squishEffect.Stop();
         squishEffect.Play();
+        gameObject.GetComponent<BallRotation>().DropAllNuts();
         float capturedY = transform.localPosition.y;
         float y_Offset = GetComponent<CapsuleCollider>().height / 2 * transform.localScale.y;
         var interval = 0.033f;
