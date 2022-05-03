@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 279703607201000644}
   - component: {fileID: 3633760148448467945}
   - component: {fileID: 118702504455121555}
+  - component: {fileID: 3172338854332893001}
   m_Layer: 0
   m_Name: Nut
   m_TagString: Nut
@@ -116,6 +117,26 @@ CapsuleCollider:
   m_Height: 0.62163377
   m_Direction: 1
   m_Center: {x: 0.0065829754, y: -0.0026369542, z: 0.001385048}
+--- !u!114 &3172338854332893001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792793853396503825}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18b19cc356e10248aef9167f8697f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detectPlayerRadius: 3
+  _pickUpHeightScale: 0.4
+  _speed: 1
+  _dropHeight: 5
+  _dropRadius: 5
+  _gainRadius: 1
+  _timeBeforeAbleToPickAgain: 5
+  _canTriggerFind: 1
 --- !u!1 &3106010179466452740
 GameObject:
   m_ObjectHideFlags: 0
