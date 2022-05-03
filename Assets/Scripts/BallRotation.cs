@@ -42,17 +42,16 @@ public class BallRotation : MonoBehaviour {
     private Text _nutCountText;
 
     private void Awake() {
-        hamHealth = GetComponent<HamsterHealth>();
-    }
-
-    // Start is called before the first frame update
-    void Start() {
+        hamHealth = GetComponent<HamsterHealth>();        
         _rb = GetComponent<Rigidbody>();
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _rb.useGravity = false;
         _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         dustTrail.gameObject.SetActive(false);
     }
+
+    // Photon instantiation does not call start function
+
 
     // Update is called once per frame
     void Update() {
@@ -67,6 +66,7 @@ public class BallRotation : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (!GetComponent<PhotonView>().IsMine) return;
         if (_ballMode) {
             BallTorque();
             transform.position = _ball.transform.position + ballOffset;
