@@ -144,6 +144,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b008542c-7b39-47e0-b4b7-c1584af7636e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""253a282c-3638-4843-8012-2af3ecb83362"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
@@ -166,19 +177,19 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""81b35882-f655-4493-a511-bdc846a531aa"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""280a3b5e-52ab-420a-9e51-b7de1709261b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact"",
+                    ""action"": ""DropNut"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""280a3b5e-52ab-420a-9e51-b7de1709261b"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""id"": ""ebfe77ab-2fc4-44d9-a718-84a44fd08d4c"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

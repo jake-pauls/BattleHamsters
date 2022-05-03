@@ -20,8 +20,6 @@ public class CharacterAnimations : MonoBehaviour
     {
         bool ballMode = GetComponent<BallRotation>()._ballMode;
         float velocity = ballMode ? GetComponent<BallRotation>()._ball.GetComponent<Rigidbody>().angularVelocity.magnitude : _rb.velocity.magnitude;
-        _animator.SetFloat("Speed", velocity) ;
-
-        Debug.Log(_rb.velocity.magnitude);
+        _animator.SetFloat("Speed", velocity);
     }
 }

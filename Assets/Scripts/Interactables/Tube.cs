@@ -36,7 +36,7 @@ public class Tube : MonoBehaviour
         _currentHam = hamObj;
         
         Tween.Spline(_spline, hamObj.transform, fromASide ? 0 : 1, fromASide ? 1 : 0, true, splineDuration, 0);
-        Debug.Log("moving");
+        //Debug.Log("moving");
         
         //todo disable input, physics and collision check perhaps
         //todo WARNING: do not disable PlayerInput, otherwise it triggers the respawn
