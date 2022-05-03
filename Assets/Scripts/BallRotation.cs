@@ -14,7 +14,8 @@ public class BallRotation : MonoBehaviour {
     private Rigidbody _rb;
     public bool _ballMode;
 
-    public float _speed;
+    public float _maxSpeed = 10f; // if changing speed please do in code
+    public float _speed = 10f; // if changing speed please do in code
     [SerializeField] private float _acceleration;
     [SerializeField] private float _gravity;
     [SerializeField] private float _rollSpeed;
@@ -97,15 +98,6 @@ public class BallRotation : MonoBehaviour {
         Vector3 Torque = Vector3.Cross(Vector3.up, finalAcceleration);
         rb.AddTorque(Torque * _torqueMultiplier);
     }
-    //public void OnFire()
-    //{
-    //    if (!_ballMode)
-    //        OnMount();
-    //    else OnUnmount();
-    //    GetComponent<Animator>().SetTrigger("Interact");
-    //    _enterBallEffect.SendEvent(_enterBallEventName);
-
-    //}
 
     public void OnMount() {
         gameObject.transform.SetParent(_ball.transform);
@@ -178,12 +170,21 @@ public class BallRotation : MonoBehaviour {
     public void OnDropNut() {
         if (NutCount > 0) {
             // Drop Nut
-            float percentage = _speed * 0.15f;
-            _speed += percentage;
+            float lerpSpeed = _maxSpeed - Mathf.Lerp(0, _maxSpeed, NutCount / _maxSpeed) + 1;
+            _speed = lerpSpeed;
 
             NutCount--;
-            Vector3 newPos = transform.position - (transform.right * 2.0f);
-            Instantiate(NutPrefab, newPos, Quaternion.identity);
+            Vector3 newPos = transform.position - (transform.forward * -1 * 2.0f);
+            GameObject newNut = Instantiate(NutPrefab, newPos, Quaternion.identity);
+            newNut.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5.0f, 3.0f);
+        }
+    }
+
+    public void DropAllNuts()
+    {
+        while (NutCount != 0)
+        {
+            OnDropNut();
         }
     }
 
