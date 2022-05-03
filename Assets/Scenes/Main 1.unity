@@ -4285,10 +4285,38 @@ PrefabInstance:
       propertyPath: _playerManager
       value: 
       objectReference: {fileID: 1188662270}
+    - target: {fileID: 8088254398659605411, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088254398659605411, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088254398659605411, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088254398659605411, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1036
+      objectReference: {fileID: 0}
     - target: {fileID: 8088254398977708158, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
       propertyPath: _scoreManager
       value: 
       objectReference: {fileID: 269662368}
+    - target: {fileID: 8088254399116835761, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088254399125352169, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088254399140714236, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 14.600006
+      objectReference: {fileID: 0}
     - target: {fileID: 8088254399271008266, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
       propertyPath: m_Name
       value: GameUI-Master
@@ -4376,6 +4404,14 @@ PrefabInstance:
     - target: {fileID: 8088254399271008267, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088254399529957509, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 14.600006
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088254400025257149, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 14.600006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd2417d0ba3af8848a4133ed3f33ff9d, type: 3}

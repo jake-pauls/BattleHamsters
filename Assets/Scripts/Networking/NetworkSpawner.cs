@@ -15,7 +15,7 @@ public class NetworkSpawner : MonoBehaviour
 
         // Instantiate creates an object tied the player that spawned it, when that player quits/disconnects, the object is destroyed
         // InstantiateRoomObject creates an object tied to the level, when the player quits/disconnects it persists
-        GetComponent<PhotonView>().RPC("updatePrefabIndex", RpcTarget.All);
+        GetComponent<PhotonView>().RPC("updatePrefabIndex", RpcTarget.All, _prefabIndex);
         PhotonNetwork.Instantiate(_prefab[_prefabIndex].name, transform.position, transform.rotation);
         _prefabIndex++;
     }
