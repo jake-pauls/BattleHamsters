@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
+using Photon.Pun;
 
 public class BallRotation : MonoBehaviour {
     public bool inputDisabled;

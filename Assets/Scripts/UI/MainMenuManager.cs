@@ -24,7 +24,7 @@ public class MainMenuManager : MonoBehaviour {
     [HideInInspector]
     public static bool IsMainMenuUp = true;
     
-    private void Awake() => SwitchToMainMenu(); 
+    private void Awake() => SwitchToGame(); 
 
     public void SwitchToGame() {
         IsMainMenuUp = false;
