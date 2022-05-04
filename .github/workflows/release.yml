@@ -1,0 +1,148 @@
+# Performs tests on the project, builds it, and uploads artifacts
+# Also creates a release with a tag and build artifacts
+name: Test, Build, and Release Unity Project
+
+# Create and fully release project when a new tag is pushed
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  PROJECT_PATH: .
+
+jobs:
+  license:
+    name: Validate license integrity 
+    runs-on: ubuntu-latest
+    outputs:
+      is_unity_license_set: ${{ steps.license_job.outputs.is_unity_license_set }}
+    steps:
+      - name: Determine if Unity license secret is set in the repository
+        id: license_job
+        run: |
+          echo "Skip activation: ${{ env.UNITY_LICENSE != '' }}"
+          echo "::set-output name=is_unity_license_set::${{ env.UNITY_LICENSE != '' }}"
+
+  test:
+    needs: [license]
+    if: needs.license.outputs.is_unity_license_set == 'true'
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Cache library files
+        uses: actions/cache@v2.1.3
+        with:
+          path: Library
+          key: Library-Hamstars-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-Hamstars-
+            Library-
+      # https://github.com/game-ci/unity-test-runner/releases/
+      - name: Execute Unity test runner
+        uses: game-ci/unity-test-runner@v2.0.2
+        id: test_job
+        with:
+          projectPath: ${{ env.PROJECT_PATH }}
+          testMode: all
+          customParameters: "-nographics"
+      - name: Upload resultant test artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test results (all modes)
+          path: ${{ steps.test_job.outputs.artifactsPath }}
+
+  build:
+    needs: [license]
+    if: needs.license.outputs.is_unity_license_set == 'true'
+    name: Build for ${{ matrix.targetPlatform }} on version ${{ matrix.unityVersion }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2021.3.1f1
+        targetPlatform:
+          - StandaloneOSX
+          - StandaloneWindows64
+          - StandaloneLinux64
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Cache library files
+        uses: actions/cache@v2.1.3
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-
+            Library-
+      # https://github.com/game-ci/unity-builder/releases/
+      - name: Build Hamstars for ${{ matrix.targetPlatform }}
+        uses: game-ci/unity-builder@v2.0.3
+        with:
+          projectPath: ${{ env.PROJECT_PATH }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+      - name: Zip build
+        run: (cd build/${{ matrix.targetPlatform }} && sudo zip -r ../../${{ matrix.targetPlatform }}.zip .)
+      - name: Upload build artifacts 
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: ${{ matrix.targetPlatform }}.zip
+
+  release:
+    name: Create project release
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+      - name: Create release with tag
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          files: |
+            build/*.zip
+  
+  itch:
+    name: Upload current build to itch.io
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+      - name: Publish Windows build 
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: windows
+          ITCH_GAME: hamstars 
+          ITCH_USER: jake-pauls
+          PACKAGE: build/StandaloneWindows64.zip
+      - name: Publish Mac build 
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: osx
+          ITCH_GAME: hamstars 
+          ITCH_USER: jake-pauls
+          PACKAGE: build/StandaloneOSX.zip
+      - name: Publish Linux build 
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: linux 
+          ITCH_GAME: hamstars 
+          ITCH_USER: jake-pauls
+          PACKAGE: build/StandaloneLinux64.zip
