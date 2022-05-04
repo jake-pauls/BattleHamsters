@@ -4,7 +4,8 @@ name: Unity Tests
 on:
   push:
     branches: [main, develop]
-  pull_request: {}
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
