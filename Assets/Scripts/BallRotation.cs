@@ -33,6 +33,7 @@ public class BallRotation : MonoBehaviour {
     public int pid;
     public Vector3 ballOffset = new Vector3(0, -1f, 0);
     private HamsterHealth hamHealth;
+    private PhotonView _view;   
 
     [Header("Nut Management")]
     public int NutCount;
@@ -47,6 +48,7 @@ public class BallRotation : MonoBehaviour {
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _rb.useGravity = false;
         _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        _view = GetComponent<PhotonView>(); 
         dustTrail.gameObject.SetActive(false);
     }
 
@@ -68,9 +70,12 @@ public class BallRotation : MonoBehaviour {
     private void FixedUpdate() {
         if (!GetComponent<PhotonView>().IsMine) return;
         if (_ballMode) {
-            BallTorque();
-            transform.position = _ball.transform.position + ballOffset;
-            dustTrail.gameObject.SetActive(true);
+            if (_ball.GetComponent<PhotonView>().IsMine)
+            {
+                BallTorque();
+                transform.position = _ball.transform.position + ballOffset;
+                dustTrail.gameObject.SetActive(true);
+            }
         } else {
             Vector3 up = Vector3.up;
             Vector3 right = Camera.main.transform.right;
@@ -100,25 +105,34 @@ public class BallRotation : MonoBehaviour {
         rb.AddTorque(Torque * _torqueMultiplier);
     }
 
+    [PunRPC]
     public void OnMount() {
         gameObject.transform.SetParent(_ball.transform);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), true);
         gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localRotation = Quaternion.identity;
         _ballMode = true;
-        _rb.velocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
+        if (_view.IsMine)
+        {
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
         gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         _ball.tag = "PlayerHamsterBall";
     }
 
+    [PunRPC]
     public void OnUnmount() {
         if (!_ball) return;
         gameObject.transform.SetParent(null);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), false);
         _ballMode = false;
-        _rb.velocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
+
+        if (_view.IsMine)
+        {
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
 
         _ball.tag = "HamsterBall";
 
@@ -152,7 +166,8 @@ public class BallRotation : MonoBehaviour {
             foreach (Collider c in col) {
                 if (c.tag == "HamsterBall") {
                     _ball = c.gameObject;
-                    OnMount();
+                    if (_view.IsMine) _view.RPC("OnMount", RpcTarget.All);                    
+
                     GetComponent<Animator>().SetTrigger("Interact");
                     if (_enterBallEffect) _enterBallEffect.SendEvent(_enterBallEventName);
                     dustTrail.Stop();
@@ -162,9 +177,11 @@ public class BallRotation : MonoBehaviour {
             }
         }
         else if (_ballMode) {
+
+            if (_view.IsMine) _view.RPC("OnUnmount", RpcTarget.All);
             dustTrail.Stop();
             dustTrail.Play();
-            OnUnmount();
+            
         }
     }
 
