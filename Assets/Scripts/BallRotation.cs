@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
+using TMPro;
 
 public class BallRotation : MonoBehaviour {
     public bool inputDisabled;
@@ -38,7 +36,7 @@ public class BallRotation : MonoBehaviour {
     [SerializeField]
     private GameObject NutPrefab;
     [SerializeField]
-    private Text _nutCountText;
+    private TMP_Text _nutCountText;
 
     private void Awake() {
         hamHealth = GetComponent<HamsterHealth>();

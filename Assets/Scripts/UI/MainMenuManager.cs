@@ -53,7 +53,6 @@ public class MainMenuManager : MonoBehaviour {
 
         // Display main menu and deactivate player spawning
         _mainMenuUI.SetActive(true);
-        _startButton.Select();
         _dashboardUI.SetActive(false);
         _playerManager.SetActive(false);
     }
