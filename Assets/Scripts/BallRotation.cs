@@ -170,10 +170,9 @@ public class BallRotation : MonoBehaviour {
     public void OnDropNut() {
         if (NutCount > 0) {
             // Drop Nut
+            NutCount--;
             float lerpSpeed = _maxSpeed - Mathf.Lerp(0, _maxSpeed, NutCount / _maxSpeed) + 1;
             _speed = lerpSpeed;
-
-            NutCount--;
             Vector3 newPos = transform.position - (transform.forward * -1 * 2.0f);
             GameObject newNut = Instantiate(NutPrefab, newPos, Quaternion.identity);
             newNut.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5.0f, 3.0f);
