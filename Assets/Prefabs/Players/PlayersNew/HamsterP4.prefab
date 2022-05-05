@@ -77,11 +77,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8904819406760039172, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
-      value: 3.031433
+      value: 2.2174046
       objectReference: {fileID: 0}
     - target: {fileID: 8904819406760039172, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.y
-      value: 2.9006655
+      value: 0.52123696
       objectReference: {fileID: 0}
     - target: {fileID: 8904819406760039172, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
       propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z

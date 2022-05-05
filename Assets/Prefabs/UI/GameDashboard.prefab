@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8571058530535550766}
   - component: {fileID: 2872804917425412081}
-  - component: {fileID: 7568409504508166692}
   - component: {fileID: 7354891885330255488}
   m_Layer: 5
   m_Name: Timer
@@ -47,19 +46,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791254791949149533}
   m_CullTransparentMesh: 1
---- !u!114 &7568409504508166692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 791254791949149533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c15fb43f0e386d943a4d40633c9ad9d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartTimer: 0
 --- !u!114 &7354891885330255488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,7 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreManager: {fileID: 0}
-  _timer: {fileID: 7568409504508166692}
+  _timer: {fileID: 0}
   _gameTimerUI: {fileID: 7354891885330255488}
   _p1ScoreUI: {fileID: 7496908025367294489}
   _p2ScoreUI: {fileID: 3558304563688859169}
@@ -682,7 +668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bdaee8ef2603c8047ab9bd179b407477, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0196ed3a842dbc14e9894200310b4a4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

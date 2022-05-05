@@ -1,25 +1,28 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using Cinemachine;
 
-public class MainMenuManager : MonoBehaviour {
-    [Header("Cinemachine")]
-    [SerializeField]
-    private CinemachineVirtualCamera _gameVCam;
-    [SerializeField]
-    private CinemachineVirtualCamera _menuVCam;
+public class UIManager : MonoBehaviour {
     [Header("UI Elements")]
     [SerializeField]
     private GameObject _mainMenuUI;
     [SerializeField]
     private GameObject _dashboardUI;
     [SerializeField]
-    private Button _startButton;
+    private GameObject _winnerMenuUI;
     [Header("Managers")]
     [SerializeField]
     private GameObject _playerManager;
     [SerializeField]
     private DashboardManager _dashboardManager;
+    [SerializeField]
+    private ScoreManager _scoreManager;
+    [Header("Cinemachine")]
+    [SerializeField]
+    private CinemachineVirtualCamera _gameVCam;
+    [SerializeField]
+    private CinemachineVirtualCamera _menuVCam;
 
     [HideInInspector]
     public static bool IsMainMenuUp = true;
@@ -56,6 +59,23 @@ public class MainMenuManager : MonoBehaviour {
         _dashboardUI.SetActive(false);
         _playerManager.SetActive(false);
     }
+
+    public void SwitchToWinnerMenu() {
+        // Transition to player camera
+        Debug.Log("Display winner menu");
+
+        // Display winner UI and player banner
+        _winnerMenuUI.SetActive(true);
+
+        // Retrieves a descending list of player scores, displays the menu for the top entry (winner) 
+        List<KeyValuePair<int, int>> playerScores = _scoreManager.GetPlayerInformation().OrderByDescending(x => x.Value).ToList();
+        _winnerMenuUI.GetComponent<WinnerMenuManager>().DisplayWinnerMenu(playerScores[0].Key);
+
+        _dashboardUI.SetActive(false);
+        _playerManager.SetActive(false);
+    }
+
+    public void PlayAgain() => Debug.Log("Play again!");
 
     public static void Quit() => Application.Quit(); 
 }

@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1987713227097920024}
-  - component: {fileID: 1987713227097920027}
   m_Layer: 5
-  m_Name: MainMenuUI
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,25 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1987713227097920027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987713227097920025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0298aea186da8547bcb0b3767a4102f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameVCam: {fileID: 0}
-  _menuVCam: {fileID: 0}
-  _mainMenuUI: {fileID: 1987713227097920025}
-  _dashboardUI: {fileID: 0}
-  _startButton: {fileID: 1987713227917845516}
-  _playerManager: {fileID: 0}
-  _dashboardManager: {fileID: 0}
 --- !u!1 &1987713227198822984
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +161,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1987713227097920027}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
@@ -391,7 +371,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1987713227097920027}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: SwitchToGame
         m_Mode: 1

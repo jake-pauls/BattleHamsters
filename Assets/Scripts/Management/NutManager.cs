@@ -25,7 +25,7 @@ public class NutManager : MonoBehaviour {
     private void Awake() => _canSpawnNut = true;
 
     private void Update() {
-        if (!MainMenuManager.IsMainMenuUp) {
+        if (!UIManager.IsMainMenuUp) {
             if (_canSpawnNut) {
                 SpawnNut();
             }

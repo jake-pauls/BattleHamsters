@@ -11,32 +11,22 @@ public class DashboardManager : MonoBehaviour {
     [SerializeField]
     private TMP_Text _gameTimerUI;
     [SerializeField]
-    private TMP_Text _p1ScoreUI;
-    [SerializeField]
-    private TMP_Text _p2ScoreUI;
-    [SerializeField]
-    private TMP_Text _p3ScoreUI;
-    [SerializeField]
-    private TMP_Text _p4ScoreUI;
+    private TMP_Text[] _playerScoreUIs;
 
     private void Awake() => ResetDashboard();
 
     private void Update() {
         _gameTimerUI.text = _timer.GetTimeString();
 
-        _p1ScoreUI.text = _scoreManager.PlayerOneScoreArea.CurrentScore.ToString();
-        _p2ScoreUI.text = _scoreManager.PlayerTwoScoreArea.CurrentScore.ToString();
-        _p3ScoreUI.text = _scoreManager.PlayerThreeScoreArea.CurrentScore.ToString();
-        _p4ScoreUI.text = _scoreManager.PlayerFourScoreArea.CurrentScore.ToString();
+        if (_playerScoreUIs.Length == _scoreManager.ScoreAreas.Length) {
+            for (int i = 0; i < _playerScoreUIs.Length; i++) {
+                _playerScoreUIs[i].text = _scoreManager.ScoreAreas[i].CurrentScore.ToString();
+            }
+        }
     }
 
     public void ResetDashboard() {
         _timer.ResetTimer();
         _timer.StartTimer = true;
-
-        _p1ScoreUI.text = "0";
-        _p2ScoreUI.text = "0";
-        _p3ScoreUI.text = "0";
-        _p4ScoreUI.text = "0";
     }
 }
