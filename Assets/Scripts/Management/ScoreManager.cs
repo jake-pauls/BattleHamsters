@@ -5,23 +5,26 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour {
     public ScoreArea[] ScoreAreas;
 
-    public Dictionary<int, int> GetPlayerInformation() {
+    public List<KeyValuePair<int, int>> GetSortedPlayerInformation() {
         Dictionary<int, int> playerInformation = new Dictionary<int, int>(); 
 
         // Create dict with [playerId -> playerScore]
         for (int i = 0; i < ScoreAreas.Length; i++) {
-            Debug.Log($"Creating id -> {i} with score {ScoreAreas[i].CurrentScore}");
             playerInformation[i] = ScoreAreas[i].CurrentScore;
         }
 
-        return playerInformation;
+        return playerInformation.OrderByDescending(x => x.Value).ToList();
     }
 
     public bool DoesWinnerExist() {
-        Dictionary<int, int> playerInformation = GetPlayerInformation();
-        
-        Debug.Log($"Distinct count {playerInformation.Values.Distinct().Count()}");
+        List<KeyValuePair<int, int>> playerInformation = GetSortedPlayerInformation();
 
-        return playerInformation.Values.Distinct().Count() == playerInformation.Count();
+        // Check if the top value has the same value as any other score in the list 
+        for (int i = 1; i < playerInformation.Count; i++) {
+            if (playerInformation[0].Value == playerInformation[i].Value) 
+                return false;
+        }
+
+        return true;
     }
 }

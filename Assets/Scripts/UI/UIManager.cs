@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Cinemachine;
 
@@ -61,15 +60,20 @@ public class UIManager : MonoBehaviour {
     }
 
     public void SwitchToWinnerMenu() {
-        // Transition to player camera
-        Debug.Log("Display winner menu");
 
         // Display winner UI and player banner
         _winnerMenuUI.SetActive(true);
 
         // Retrieves a descending list of player scores, displays the menu for the top entry (winner) 
-        List<KeyValuePair<int, int>> playerScores = _scoreManager.GetPlayerInformation().OrderByDescending(x => x.Value).ToList();
-        _winnerMenuUI.GetComponent<WinnerMenuManager>().DisplayWinnerMenu(playerScores[0].Key);
+        List<KeyValuePair<int, int>> playerScores = _scoreManager.GetSortedPlayerInformation();
+
+        var winningPlayerIndex = playerScores[0].Key;
+        _winnerMenuUI.GetComponent<WinnerMenuManager>().DisplayWinnerMenu(winningPlayerIndex);
+
+        // Transition to player camera
+        GameObject winningPlayer = PlayerManager.Instance.PlayersInGame[winningPlayerIndex];
+        winningPlayer.GetComponentInChildren<CinemachineVirtualCamera>().Priority = 1;
+        _gameVCam.Priority = 0;
 
         _dashboardUI.SetActive(false);
         _playerManager.SetActive(false);

@@ -19,8 +19,12 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    [Header("Camera Management")] [SerializeField]
+    [Header("Camera Management")] 
+    [SerializeField]
     private CinemachineTargetGroup _targetGroup = null;
+
+    [HideInInspector]
+    public List<GameObject> PlayersInGame = new List<GameObject>();
 
     private static List<Transform> _spawnPoints = new List<Transform>();
     private int _nextSpawnIndex = 0;
@@ -65,6 +69,9 @@ public class PlayerManager : MonoBehaviour
     {
         var spawnedPlayer = playerInput.gameObject;
 
+        // Add spawned player to list of players in game
+        PlayersInGame.Add(spawnedPlayer);
+
         // Give spawned player an id based on their spawn index [0 -> 3]
         spawnedPlayer.GetComponent<BallRotation>().pid = _nextSpawnIndex;
 
@@ -78,8 +85,5 @@ public class PlayerManager : MonoBehaviour
         _characterSwitcher.TriggerNextSpawnCharacter();
     }
 
-    public Transform SpawnPoint(int pid)
-    {
-        return _spawnPoints[pid];
-    }
+    public Transform SpawnPoint(int pid) => _spawnPoints[pid];
 }
