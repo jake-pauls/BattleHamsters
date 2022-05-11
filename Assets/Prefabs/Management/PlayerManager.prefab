@@ -9,9 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6814472107289786376}
-  - component: {fileID: 6814472107289786375}
   - component: {fileID: 6814472107289786378}
-  - component: {fileID: 6814472107289786377}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -34,58 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6814472107289786375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6814472107289786374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NotificationBehavior: 0
-  m_MaxPlayerCount: 4
-  m_AllowJoining: 1
-  m_JoinBehavior: 0
-  m_PlayerJoinedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_PlayerLeftEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_JoinAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Join
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: d5d8c3e2-c8c9-4366-b11c-2ce4ec31fdfa
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings:
-      - m_Name: 
-        m_Id: a4ba0bd9-ada0-430a-b864-9510a2070e83
-        m_Path: <Gamepad>/start
-        m_Interactions: 
-        m_Processors: 
-        m_Groups: 
-        m_Action: Join
-        m_Flags: 0
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 125192102924227446, guid: 8e772aa69c2b075459e7ea7d08affdf1, type: 3}
-  m_SplitScreen: 0
-  m_MaintainAspectRatioInSplitScreen: 0
-  m_FixedNumberOfSplitScreens: -1
-  m_SplitScreenRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!114 &6814472107289786378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,20 +45,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetGroup: {fileID: 0}
---- !u!114 &6814472107289786377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6814472107289786374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b1766af6bbdef488ef48425bba4359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _availableCharacters:
-  - {fileID: 3462764868371478922, guid: 88ccf6e66b5f7df40bc06cd3595908a5, type: 3}
-  - {fileID: 4264330830217870136, guid: da0438332f8289948a984eac41807299, type: 3}
-  - {fileID: 1001085444461773898, guid: fee986deb3abbf244aaac48c6528b1f7, type: 3}
-  - {fileID: 4432914681401097883, guid: 255c14cbf0985844e9076a949264ca97, type: 3}

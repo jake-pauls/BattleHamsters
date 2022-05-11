@@ -115,7 +115,7 @@ public class HamsterHealth : MonoBehaviour
         UpdateCollision(false);
         
         // reset location to the spawning point
-        Transform spawnTrans = RewiredPlayerManager.Instance.SpawnPoint(GetComponent<BallRotation>().pid);
+        Transform spawnTrans = PlayerManager.SpawnPoint(GetComponent<BallRotation>().playerId);
         transform.position = spawnTrans.position;
         transform.rotation = spawnTrans.rotation;
         

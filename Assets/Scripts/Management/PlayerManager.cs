@@ -78,7 +78,7 @@ public class PlayerManager : MonoBehaviour
         _characterSwitcher.TriggerNextSpawnCharacter();
     }
 
-    public Transform SpawnPoint(int pid)
+    public static Transform SpawnPoint(int pid)
     {
         return _spawnPoints[pid];
     }
