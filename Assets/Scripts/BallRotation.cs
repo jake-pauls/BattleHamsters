@@ -29,6 +29,7 @@ public class BallRotation : MonoBehaviour {
     [SerializeField] private VisualEffect _enterBallEffect;
     [SerializeField] private string _enterBallEventName;
     [SerializeField] private float _jumpHeight;
+    [SerializeField] private Vector3 _ballOffset;
     private float _turnSpeed = 10f;
     public int pid;
     public Vector3 ballOffset = new Vector3(0, -1f, 0);
@@ -70,12 +71,12 @@ public class BallRotation : MonoBehaviour {
     private void FixedUpdate() {
         if (!GetComponent<PhotonView>().IsMine) return;
         if (_ballMode) {
+                //transform.position = _ball.transform.position + ballOffset;
             if (_ball.GetComponent<PhotonView>().IsMine)
             {
                 BallTorque();
-                transform.position = _ball.transform.position + ballOffset;
-                dustTrail.gameObject.SetActive(true);
             }
+                dustTrail.gameObject.SetActive(true);
         } else {
             Vector3 up = Vector3.up;
             Vector3 right = Camera.main.transform.right;
@@ -96,6 +97,7 @@ public class BallRotation : MonoBehaviour {
         _rb.angularVelocity = new Vector3(0f, angularVelocity, 0f);
     }
 
+
     public void BallTorque() {
         Rigidbody rb = _ball.GetComponent<Rigidbody>();
         Vector3 targetAcceleration = _movementInput * _rollSpeed;
@@ -109,14 +111,16 @@ public class BallRotation : MonoBehaviour {
     public void OnMount() {
         gameObject.transform.SetParent(_ball.transform);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), true);
-        gameObject.transform.localPosition = Vector3.zero;
-        gameObject.transform.localRotation = Quaternion.identity;
+        gameObject.transform.localPosition = Vector3.zero + _ballOffset;
+        //gameObject.transform.localRotation = Quaternion.identity;
+        gameObject.transform.rotation = _ball.transform.rotation;
         _ballMode = true;
         if (_view.IsMine)
         {
             _rb.velocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
         }
+        _rb.constraints = RigidbodyConstraints.FreezeAll;
         gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         _ball.tag = "PlayerHamsterBall";
     }
@@ -133,6 +137,7 @@ public class BallRotation : MonoBehaviour {
             _rb.velocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
         }
+            _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         _ball.tag = "HamsterBall";
 
@@ -165,8 +170,13 @@ public class BallRotation : MonoBehaviour {
             Collider[] col = Physics.OverlapSphere(transform.position, _interactionRadius);
             foreach (Collider c in col) {
                 if (c.tag == "HamsterBall") {
-                    _ball = c.gameObject;
-                    if (_view.IsMine) _view.RPC("OnMount", RpcTarget.All);                    
+                    int viewID = c.GetComponent<PhotonView>().ViewID;
+                    //_ball = c.gameObject;
+                    _view.RPC("SetBall", RpcTarget.All,viewID);
+                    if (_view.IsMine)
+                    {
+                        _view.RPC("OnMount", RpcTarget.All);
+                    }
 
                     GetComponent<Animator>().SetTrigger("Interact");
                     if (_enterBallEffect) _enterBallEffect.SendEvent(_enterBallEventName);
@@ -183,6 +193,12 @@ public class BallRotation : MonoBehaviour {
             dustTrail.Play();
             
         }
+    }
+
+    [PunRPC]
+    public void SetBall(int viewID)
+    {
+        _ball = PhotonView.Find(viewID).gameObject;
     }
 
     public void OnDropNut() {

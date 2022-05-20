@@ -3914,7 +3914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027233dc903a0f245a5cec8b3f7662a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nickName: Player
+  _nickName: XD
   _version: 0.01
   _maxPlayers: 4
   _roomName: zzz

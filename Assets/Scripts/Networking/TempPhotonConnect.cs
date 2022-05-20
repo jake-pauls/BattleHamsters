@@ -8,10 +8,10 @@ using UnityEngine.Events;
 
 public class TempPhotonConnect : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private string _nickName = "XJP8964";
+    [SerializeField] private string _nickName = "XD";
     [SerializeField] private string _version = "0.01";
     [SerializeField] private byte _maxPlayers = 12;
-    [SerializeField] private string _roomName = "Tiananmen";
+    [SerializeField] private string _roomName = "RoomName";
 
     public UnityEvent JoinedRoom;
 
