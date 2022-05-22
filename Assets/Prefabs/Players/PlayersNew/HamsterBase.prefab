@@ -1567,7 +1567,6 @@ GameObject:
   - component: {fileID: 7288047323661076767}
   - component: {fileID: 7288047323661076761}
   - component: {fileID: 7288047323661076765}
-  - component: {fileID: 7288047323661076766}
   - component: {fileID: 7288047323661076762}
   - component: {fileID: 7852474770492390593}
   m_Layer: 3
@@ -1662,6 +1661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputDisabled: 0
+  playerId: 0
   _ballMode: 0
   _maxSpeed: 10
   _speed: 10
@@ -1681,36 +1681,6 @@ MonoBehaviour:
   NutCount: 0
   NutPrefab: {fileID: 1792793853396503825, guid: d70187509926ee74090c73af94089a9a, type: 3}
   _nutCountText: {fileID: 6534599737442337124}
---- !u!114 &7288047323661076766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8828934262471164192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: e2513389f0f9be84da50b651261bfa17, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Ground
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &7288047323661076762
 MonoBehaviour:
   m_ObjectHideFlags: 0
