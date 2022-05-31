@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Cinemachine;
 
 public class PlayerManager : MonoBehaviour
@@ -61,24 +60,7 @@ public class PlayerManager : MonoBehaviour
         _nextSpawnIndex++;
     }
 
-    public void OnPlayerJoined(PlayerInput playerInput)
-    {
-        var spawnedPlayer = playerInput.gameObject;
-
-        // Give spawned player an id based on their spawn index [0 -> 3]
-        spawnedPlayer.GetComponent<BallRotation>().pid = _nextSpawnIndex;
-
-        SpawnPlayer(spawnedPlayer);
-
-        // Setup other game features (ie: HUDs/UI on a player-by-player basis here)
-
-        SetupPlayerCameras(spawnedPlayer);
-
-        // Increment the character index to spawn the next character
-        _characterSwitcher.TriggerNextSpawnCharacter();
-    }
-
-    public Transform SpawnPoint(int pid)
+    public static Transform SpawnPoint(int pid)
     {
         return _spawnPoints[pid];
     }

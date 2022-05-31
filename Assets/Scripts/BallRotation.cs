@@ -1,8 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.VFX;
 using TMPro;
+using Rewired;
 
 public class BallRotation : MonoBehaviour {
     public bool inputDisabled;
@@ -10,6 +10,8 @@ public class BallRotation : MonoBehaviour {
     private Vector2 _moveInput;
     private Vector3 _movementInput;
     private Rigidbody _rb;
+    private Player player; // The Rewired Player
+    public int playerId = 0; // The Rewired player id of this character
     public bool _ballMode;
 
     public float _maxSpeed = 10f; // if changing speed please do in code
@@ -37,9 +39,15 @@ public class BallRotation : MonoBehaviour {
     private GameObject NutPrefab;
     [SerializeField]
     private TMP_Text _nutCountText;
+    private bool joinedGame = false;
 
     private void Awake() {
         hamHealth = GetComponent<HamsterHealth>();
+        player = ReInput.players.GetPlayer(playerId);
+        inputDisabled = true;
+        joinedGame = false;
+        //inputDisabled = true;
+        // Need to set camera and spawn
     }
 
     // Start is called before the first frame update
@@ -53,14 +61,18 @@ public class BallRotation : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Vector3 moveInput = new Vector3(-_moveInput.x, 0f, -_moveInput.y).normalized;
-        _movementInput = moveInput;
+        if (!MainMenuManager.IsMainMenuUp)
+        {
+            _moveInput = inputDisabled ? Vector2.zero : new Vector2(player.GetAxis("Move Horizontal"), player.GetAxis("Move Vertical"));
+            Vector3 moveInput = new Vector3(-_moveInput.x, 0f, -_moveInput.y).normalized;
+            _movementInput = moveInput;
+            if (player.GetButtonDown("Jump")) OnJump();
+            if (player.GetButtonDown("Interact")) OnInteract();
+            if (player.GetButtonDown("Drop")) OnDropNut();
+            if (player.GetButtonDown("Join")) OnJoin();
 
-        _nutCountText.text = NutCount.ToString();
-    }
-
-    public void OnMove(InputValue value) {
-        _moveInput = inputDisabled ? Vector2.zero : value.Get<Vector2>();
+            _nutCountText.text = NutCount.ToString();
+        }
     }
 
     private void FixedUpdate() {
@@ -72,7 +84,7 @@ public class BallRotation : MonoBehaviour {
             Vector3 up = Vector3.up;
             Vector3 right = Camera.main.transform.right;
             Vector3 forward = Vector3.Cross(right, up);
-            Vector3 moveInput = forward * _moveInput.y + right * _moveInput.x;
+            Vector3 moveInput = (forward * _moveInput.y + right * _moveInput.x).normalized;
             Vector3 targetAcceleration = moveInput * _speed;
             Vector3 currentAcceleration = _rb.velocity;
             Vector3 finalAcceleration = (targetAcceleration - currentAcceleration) * _acceleration;
@@ -139,8 +151,6 @@ public class BallRotation : MonoBehaviour {
         return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
 
-
-
     public void OnInteract() {
         if (inputDisabled) return;
 
@@ -165,39 +175,44 @@ public class BallRotation : MonoBehaviour {
         }
     }
 
-    public void OnDropNut() {
+    public void OnDropNut(bool createNuts = true) {
         if (NutCount > 0) {
             // Drop Nut
             NutCount--;
             float lerpSpeed = _maxSpeed - Mathf.Lerp(0, _maxSpeed, NutCount / _maxSpeed) + 1;
             _speed = lerpSpeed;
-            Vector3 newPos = transform.position - (transform.forward * -1 * 2.0f);
-            GameObject newNut = Instantiate(NutPrefab, newPos, Quaternion.identity);
-            newNut.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5.0f, 3.0f);
+            if (createNuts)
+            {
+                Vector3 newPos = transform.position - (transform.forward * -1 * 2.0f);
+                GameObject newNut = Instantiate(NutPrefab, newPos, Quaternion.identity);
+                newNut.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5.0f, 3.0f);
+            }
         }
     }
 
-    public void DropAllNuts()
+    public void DropAllNuts(bool createNut = true)
     {
         while (NutCount != 0)
         {
-            OnDropNut();
+            OnDropNut(createNut);
         }
     }
 
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Player"))
-    //     {
-    //         Rigidbody otherrb = collision.rigidbody;
-    //         // kewk
-    //         FlattenHamster(otherrb.gameObject);
-    //     }
-    // }
-    //
-    // public void FlattenHamster(GameObject otherHamster)
-    // {
-    //     // Kewk
-    //     otherHamster.gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 1f);
-    // }
+    public void OnJoin()
+    {
+        if (joinedGame) return;
+        Debug.Log("Player: " + (playerId + 1) + " has joined the game!");
+        joinedGame = true;
+        inputDisabled = false;
+        Transform spawnPoint = PlayerManager.SpawnPoint(playerId);
+        if (spawnPoint == null)
+        {
+            Debug.LogError("Missing spawn point for player #" + (playerId + 1));
+            return;
+        }
+        _rb.GetComponent<BallRotation>().enabled = false;
+        _rb.transform.position = spawnPoint.position;
+        _rb.transform.rotation = spawnPoint.rotation;
+        _rb.GetComponent<BallRotation>().enabled = true;
+    }
 }

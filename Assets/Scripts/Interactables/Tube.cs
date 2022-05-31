@@ -5,7 +5,6 @@ using Interactables;
 using Pixelplacement;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Spline))]
 public class Tube : MonoBehaviour

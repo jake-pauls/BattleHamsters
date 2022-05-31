@@ -15,13 +15,9 @@ public class ScoreArea : MonoBehaviour {
             CurrentScore += _playerReference.NutCount;
 
             for (int i = 0; i < _playerReference.NutCount; i++) {
-                float percentage = _playerReference._speed * 0.15f;
-                _playerReference._speed += percentage;
-
                 _nutManager.CollectNut();
             }
-
-            _playerReference.NutCount = 0;
+            _playerReference.DropAllNuts(false);
         }
     }
 }
