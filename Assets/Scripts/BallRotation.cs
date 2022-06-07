@@ -61,7 +61,7 @@ public class BallRotation : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!MainMenuManager.IsMainMenuUp)
+        if (!UIManager.IsMainMenuUp)
         {
             _moveInput = inputDisabled ? Vector2.zero : new Vector2(player.GetAxis("Move Horizontal"), player.GetAxis("Move Vertical"));
             Vector3 moveInput = new Vector3(-_moveInput.x, 0f, -_moveInput.y).normalized;
@@ -201,15 +201,19 @@ public class BallRotation : MonoBehaviour {
     public void OnJoin()
     {
         if (joinedGame) return;
+
         Debug.Log("Player: " + (playerId + 1) + " has joined the game!");
         joinedGame = true;
         inputDisabled = false;
-        Transform spawnPoint = PlayerManager.SpawnPoint(playerId);
+
+        Transform spawnPoint = RewiredPlayerManager.SpawnPoint(playerId);
+        RewiredPlayerManager.PlayersInGame.Add(gameObject);
         if (spawnPoint == null)
         {
             Debug.LogError("Missing spawn point for player #" + (playerId + 1));
             return;
         }
+
         _rb.GetComponent<BallRotation>().enabled = false;
         _rb.transform.position = spawnPoint.position;
         _rb.transform.rotation = spawnPoint.rotation;

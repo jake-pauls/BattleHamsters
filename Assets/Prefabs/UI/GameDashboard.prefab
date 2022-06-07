@@ -593,10 +593,11 @@ MonoBehaviour:
   _scoreManager: {fileID: 0}
   _timer: {fileID: 0}
   _gameTimerUI: {fileID: 7354891885330255488}
-  _p1ScoreUI: {fileID: 7496908025367294489}
-  _p2ScoreUI: {fileID: 3558304563688859169}
-  _p3ScoreUI: {fileID: 4651335895336487769}
-  _p4ScoreUI: {fileID: 2786362109034440681}
+  _playerScoreUIs:
+  - {fileID: 7496908025367294489}
+  - {fileID: 3558304563688859169}
+  - {fileID: 4651335895336487769}
+  - {fileID: 2786362109034440681}
 --- !u!1 &7987995818312915426
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,16 +7,15 @@ using Rewired;
 
 public class RewiredPlayerManager : MonoBehaviour
 {
-
-    private static RewiredPlayerManager instance;
+    private static RewiredPlayerManager _instance;
     public static RewiredPlayerManager Instance
     {
         get
         {
-            if (!instance)
-                instance = FindObjectOfType<RewiredPlayerManager>();
+            if (!_instance)
+                _instance = FindObjectOfType<RewiredPlayerManager>();
 
-            return instance;
+            return _instance;
         }
     }
 
@@ -24,18 +23,25 @@ public class RewiredPlayerManager : MonoBehaviour
     [SerializeField]
     private CinemachineTargetGroup _targetGroup = null;
 
+    [HideInInspector]
+    public static List<GameObject> PlayersInGame = new List<GameObject>();
+
     private static List<Transform> _spawnPoints = new List<Transform>();
+
     private int _nextSpawnIndex = 0;
 
     private CharacterSwitcher _characterSwitcher = null;
 
-    private void Awake() {
+    private void Awake() 
+    {
         _characterSwitcher = GetComponent<CharacterSwitcher>();
-        // Subscribe to events
+
+        // Subscribe to ReWired events
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
         ReInput.ControllerPreDisconnectEvent += OnControllerPreDisconnect;
     }
+
     public static void AddSpawnPoint(Transform transform)
     {
         _spawnPoints.Add(transform);
@@ -45,8 +51,7 @@ public class RewiredPlayerManager : MonoBehaviour
 
     public static void RemoveSpawnPoint(Transform transform) => _spawnPoints.Remove(transform);
 
-    private void SetupPlayerCameras(GameObject playerInstance) =>
-        _targetGroup.AddMember(playerInstance.transform, 1, 2);
+    private void SetupPlayerCameras(GameObject playerInstance) => _targetGroup.AddMember(playerInstance.transform, 1, 2);
 
     private void SpawnPlayer(GameObject playerInstance)
     {
@@ -68,39 +73,19 @@ public class RewiredPlayerManager : MonoBehaviour
         _nextSpawnIndex++;
     }
 
-    //public void OnPlayerJoined(PlayerInput playerInput)
-    //{
-    //    var spawnedPlayer = playerInput.gameObject;
+    public static Transform SpawnPoint(int pid) => _spawnPoints[pid];
 
-    //    // Give spawned player an id based on their spawn index [0 -> 3]
-    //    spawnedPlayer.GetComponent<BallRotation>().pid = _nextSpawnIndex;
-
-    //    SpawnPlayer(spawnedPlayer);
-
-    //    // Setup other game features (ie: HUDs/UI on a player-by-player basis here)
-
-    //    SetupPlayerCameras(spawnedPlayer);
-
-    //    // Increment the character index to spawn the next character
-    //    _characterSwitcher.TriggerNextSpawnCharacter();
-    //}
-
-    public Transform SpawnPoint(int pid)
-    {
-        return _spawnPoints[pid];
-    }
-
-    void OnControllerConnected(ControllerStatusChangedEventArgs args)
+    private void OnControllerConnected(ControllerStatusChangedEventArgs args)
     {
         Debug.Log("A controller was connected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
     }
 
-    void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
+    private void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
     {
         Debug.Log("A controller was disconnected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
     }
 
-    void OnControllerPreDisconnect(ControllerStatusChangedEventArgs args)
+    private void OnControllerPreDisconnect(ControllerStatusChangedEventArgs args)
     {
         Debug.Log("A controller is being disconnected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
     }

@@ -54,12 +54,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainMenuUI: {fileID: 8088254398197351652}
   _dashboardUI: {fileID: 8088254398977708156}
-  _winnerMenuUI: {fileID: 0}
-  _playerManager: {fileID: 0}
-  _dashboardManager: {fileID: 0}
+  _winnerMenuUI: {fileID: 1257886042830669477}
+  _dashboardManager: {fileID: 8088254398977708158}
   _scoreManager: {fileID: 0}
   _gameVCam: {fileID: 0}
   _menuVCam: {fileID: 0}
+  playerId: 0
 --- !u!1001 &2225991365081197120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -272,6 +272,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6617543100619557210, guid: 7daae69553e49fa4a85e183c1e836e20, type: 3}
   m_PrefabInstance: {fileID: 5378094909760475134}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1257886042830669477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6617543100619557211, guid: 7daae69553e49fa4a85e183c1e836e20, type: 3}
+  m_PrefabInstance: {fileID: 5378094909760475134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7758160795146327805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -387,6 +392,14 @@ PrefabInstance:
       propertyPath: _dashboardManager
       value: 
       objectReference: {fileID: 8088254398977708158}
+    - target: {fileID: 1987713227917845516, guid: 0b103fab7e8068f4fbe7a2a1ab11ca10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1904980487775988148}
+    - target: {fileID: 1987713227917845516, guid: 0b103fab7e8068f4fbe7a2a1ab11ca10, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b103fab7e8068f4fbe7a2a1ab11ca10, type: 3}
 --- !u!1 &8088254398197351652 stripped

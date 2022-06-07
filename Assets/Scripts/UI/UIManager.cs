@@ -13,8 +13,6 @@ public class UIManager : MonoBehaviour {
     private GameObject _winnerMenuUI;
     [Header("Managers")]
     [SerializeField]
-    private GameObject _playerManager;
-    [SerializeField]
     private DashboardManager _dashboardManager;
     [SerializeField]
     private ScoreManager _scoreManager;
@@ -48,9 +46,6 @@ public class UIManager : MonoBehaviour {
         // Open dashboard
         _dashboardUI.SetActive(true);
         _dashboardManager.ResetDashboard();
-
-        // Start looking for players
-        _playerManager.SetActive(true);
     }
 
     public void SwitchToMainMenu() {
@@ -63,7 +58,6 @@ public class UIManager : MonoBehaviour {
         // Display main menu and deactivate player spawning
         _mainMenuUI.SetActive(true);
         _dashboardUI.SetActive(false);
-        _playerManager.SetActive(false);
     }
 
     public void SwitchToWinnerMenu() {
@@ -78,12 +72,11 @@ public class UIManager : MonoBehaviour {
         _winnerMenuUI.GetComponent<WinnerMenuManager>().DisplayWinnerMenu(winningPlayerIndex);
 
         // Transition to player camera
-        GameObject winningPlayer = PlayerManager.Instance.PlayersInGame[winningPlayerIndex];
+        GameObject winningPlayer = RewiredPlayerManager.PlayersInGame[winningPlayerIndex];
         winningPlayer.GetComponentInChildren<CinemachineVirtualCamera>().Priority = 1;
         _gameVCam.Priority = 0;
 
         _dashboardUI.SetActive(false);
-        _playerManager.SetActive(false);
     }
 
     public void PlayAgain() => Debug.Log("Play again!");
