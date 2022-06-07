@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Rewired;
 
 public class UIManager : MonoBehaviour {
     [Header("UI Elements")]
@@ -25,8 +26,14 @@ public class UIManager : MonoBehaviour {
 
     [HideInInspector]
     public static bool IsMainMenuUp = true;
-    
-    private void Awake() => SwitchToMainMenu(); 
+
+    private Player player; // The Rewired Player
+    public int playerId = 0; // The Rewired player id of this character
+
+    private void Awake() {
+        SwitchToMainMenu();
+        player = ReInput.players.GetPlayer(playerId);
+    }
 
     public void SwitchToGame() {
         IsMainMenuUp = false;

@@ -5,7 +5,6 @@ using Interactables;
 using Pixelplacement;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Spline))]
 public class LaunchPad : MonoBehaviour, IInteractable
@@ -39,7 +38,7 @@ public class LaunchPad : MonoBehaviour, IInteractable
         Tween.Spline(_spline, source.transform, 0, 1, true, translateDuration, 0);
 
         //todo disable input, physics and collision check perhaps
-        source.GetComponent<PlayerInput>().enabled = false;
+        //source.GetComponent<PlayerInput>().enabled = false;
 
         StartCoroutine(DelayedResetHamState(source, translateDuration));
         
@@ -58,6 +57,6 @@ public class LaunchPad : MonoBehaviour, IInteractable
         Assert.IsNotNull(hamObj, "Cannot reset player input, since hamObj is null.");
 
         //todo reset input, physics and collision check perhaps
-        hamObj.GetComponent<PlayerInput>().enabled = true;
+        //hamObj.GetComponent<PlayerInput>().enabled = true;
     }
 }

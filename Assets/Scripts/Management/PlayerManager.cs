@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Cinemachine;
 
 public class PlayerManager : MonoBehaviour
@@ -85,5 +84,8 @@ public class PlayerManager : MonoBehaviour
         _characterSwitcher.TriggerNextSpawnCharacter();
     }
 
-    public Transform SpawnPoint(int pid) => _spawnPoints[pid];
+    public static Transform SpawnPoint(int pid)
+    {
+        return _spawnPoints[pid];
+    }
 }
