@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 279703607201000644}
   - component: {fileID: 3633760148448467945}
   - component: {fileID: 118702504455121555}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Nut
   m_TagString: Nut
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 4387248658202947999}
   - component: {fileID: 2970291342435801275}
   - component: {fileID: 528543266373718357}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

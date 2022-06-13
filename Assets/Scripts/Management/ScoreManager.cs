@@ -27,4 +27,14 @@ public class ScoreManager : MonoBehaviour {
 
         return true;
     }
+
+    public void enableScoreArea(int playerId)
+    {
+        ScoreAreas[playerId].transform.gameObject.SetActive(true);
+    }
+
+    public void disableScoreArea(int playerId)
+    {
+        ScoreAreas[playerId].transform.gameObject.SetActive(false);
+    }
 }

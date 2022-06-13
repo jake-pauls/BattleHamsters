@@ -67,12 +67,12 @@ public class UIManager : MonoBehaviour {
 
         // Retrieves a descending list of player scores, displays the menu for the top entry (winner) 
         List<KeyValuePair<int, int>> playerScores = _scoreManager.GetSortedPlayerInformation();
-
         var winningPlayerIndex = playerScores[0].Key;
+        Debug.Log(winningPlayerIndex);
         _winnerMenuUI.GetComponent<WinnerMenuManager>().DisplayWinnerMenu(winningPlayerIndex);
 
         // Transition to player camera
-        GameObject winningPlayer = RewiredPlayerManager.PlayersInGame[winningPlayerIndex];
+        GameObject winningPlayer = RewiredPlayerManager.PlayersInGame.Find(p => p.GetComponent<BallRotation>().playerId == winningPlayerIndex);
         winningPlayer.GetComponentInChildren<CinemachineVirtualCamera>().Priority = 1;
         _gameVCam.Priority = 0;
 

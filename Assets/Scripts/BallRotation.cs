@@ -29,9 +29,10 @@ public class BallRotation : MonoBehaviour {
     [SerializeField] private string _enterBallEventName;
     [SerializeField] private float _jumpHeight;
     private float _turnSpeed = 10f;
-    public int pid;
     public Vector3 ballOffset = new Vector3(0, -1f, 0);
     private HamsterHealth hamHealth;
+    [SerializeField]
+    private ScoreManager _scoreManager;
 
     [Header("Nut Management")]
     public int NutCount;
@@ -57,6 +58,7 @@ public class BallRotation : MonoBehaviour {
         _rb.useGravity = false;
         _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         dustTrail.gameObject.SetActive(false);
+        _scoreManager.disableScoreArea(playerId);
     }
 
     // Update is called once per frame
@@ -208,6 +210,7 @@ public class BallRotation : MonoBehaviour {
 
         Transform spawnPoint = RewiredPlayerManager.SpawnPoint(playerId);
         RewiredPlayerManager.PlayersInGame.Add(gameObject);
+        _scoreManager.enableScoreArea(playerId);
         if (spawnPoint == null)
         {
             Debug.LogError("Missing spawn point for player #" + (playerId + 1));

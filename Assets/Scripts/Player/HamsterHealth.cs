@@ -51,19 +51,24 @@ public class HamsterHealth : MonoBehaviour
         var capturedVel = ballRigid.velocity.magnitude;
         Debug.Log($"Ball velocity = {capturedVel}");
         if (capturedVel < ballKillVelThreshold) return;
-        
+
+        revivePayer();
+    }
+
+    public void revivePayer()
+    {
         // disable input
         GetComponent<BallRotation>().inputDisabled = true;
 
         // trigger revive cooldown
         StartCoroutine(TryRevive());
-        
+
         // squish effects
         StartCoroutine(TriggerSquishEffect());
-        
+
         // mark invulnerable
         UpdateCollision(true);
-        
+
         //IMPORTANT mark dirty
         isDirty_Dead = true;
     }
