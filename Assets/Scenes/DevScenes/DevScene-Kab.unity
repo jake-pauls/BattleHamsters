@@ -259,6 +259,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &170998757 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8758080540713686830, guid: daf9b672fc6c06c419a5ccf3dbfe22bd, type: 3}
+  m_PrefabInstance: {fileID: 8758080539829536775}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &170998760
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170998757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!4 &257595928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4126781237503121785, guid: 30fcb2f70058ec643b74b51c49b47ad3, type: 3}
@@ -394,7 +416,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8758080540429930575, guid: daf9b672fc6c06c419a5ccf3dbfe22bd, type: 3}
   m_PrefabInstance: {fileID: 8758080539829536775}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 487206776}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
@@ -414,6 +436,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5349306228968797622, guid: 7fb26c0e2f3692a439ddad87070fcb01, type: 3}
+--- !u!1 &487206776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8758080540429930561, guid: daf9b672fc6c06c419a5ccf3dbfe22bd, type: 3}
+  m_PrefabInstance: {fileID: 8758080539829536775}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &487206779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487206776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6196ec9ae5bfb6f41b79549499480273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &508303752 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4114373049825424143, guid: 8f1d7849a32007249ba234b59286623a, type: 3}

@@ -51,12 +51,14 @@ public class HamsterHealth : MonoBehaviour
         var capturedVel = ballRigid.velocity.magnitude;
         Debug.Log($"Ball velocity = {capturedVel}");
         if (capturedVel < ballKillVelThreshold) return;
-
         revivePayer();
     }
 
     public void revivePayer()
     {
+        CinemachineShake.Instance.ShakeCamera(
+            5f + Mathf.Clamp(gameObject.GetComponent<BallRotation>().NutCount, 0f, 10f),
+            0.8f);
         // disable input
         GetComponent<BallRotation>().inputDisabled = true;
 
