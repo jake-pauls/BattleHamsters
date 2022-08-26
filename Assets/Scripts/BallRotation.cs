@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using TMPro;
 using Rewired;
+using System.Collections.Generic;
 
 public class BallRotation : MonoBehaviour {
     public bool inputDisabled;
@@ -41,6 +42,18 @@ public class BallRotation : MonoBehaviour {
     [SerializeField]
     private TMP_Text _nutCountText;
     private bool joinedGame = false;
+
+    [Header("Sound Management")]
+    [SerializeField] private AudioClip _spawnSound;
+    [SerializeField] private List<AudioClip> _jumpSounds;
+    [SerializeField] private AudioClip _runningSound;
+    [SerializeField] private AudioClip _runningHeavySound;
+    [SerializeField] private List<AudioClip> _dropNuts;
+    [SerializeField] private AudioClip _ballEnterSound;
+    [SerializeField] private AudioClip _ballExitSound;
+    [SerializeField] private AudioClip _ballRollingSound;
+    [SerializeField] private AudioClip _ballCollisionSound;
+
 
     private void Awake() {
         hamHealth = GetComponent<HamsterHealth>();
@@ -82,6 +95,8 @@ public class BallRotation : MonoBehaviour {
             BallTorque();
             transform.position = _ball.transform.position + ballOffset;
             dustTrail.gameObject.SetActive(true);
+            // Need a better implementation, maybe a loop function in the sound manager
+            //SoundManager.Instance.PlaySound(_ballRollingSound);
         } else {
             Vector3 up = Vector3.up;
             Vector3 right = Camera.main.transform.right;
@@ -113,6 +128,7 @@ public class BallRotation : MonoBehaviour {
 
     public void OnMount() {
         gameObject.transform.SetParent(_ball.transform);
+        SoundManager.Instance.PlaySound(_ballEnterSound);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), true);
         gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localRotation = Quaternion.identity;
@@ -125,6 +141,7 @@ public class BallRotation : MonoBehaviour {
 
     public void OnUnmount() {
         if (!_ball) return;
+        SoundManager.Instance.PlaySound(_ballExitSound);
         gameObject.transform.SetParent(null);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), false);
         _ballMode = false;
@@ -146,6 +163,8 @@ public class BallRotation : MonoBehaviour {
 
         if (!_ballMode && IsGrounded()) {
             _rb.AddForce(Vector3.up * _jumpHeight);
+            // Playing multiple times need to work that out
+            //SoundManager.Instance.PlaySound(_jumpSounds[Random.Range(0, _jumpSounds.Count-1)]);
         }
     }
 
@@ -185,6 +204,7 @@ public class BallRotation : MonoBehaviour {
             _speed = lerpSpeed;
             if (createNuts)
             {
+                SoundManager.Instance.PlaySound(_dropNuts[Random.Range(0, _dropNuts.Count - 1)]);
                 Vector3 newPos = transform.position - (transform.forward * -1 * 2.0f);
                 GameObject newNut = Instantiate(NutPrefab, newPos, Quaternion.identity);
                 newNut.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5.0f, 3.0f);
@@ -203,6 +223,7 @@ public class BallRotation : MonoBehaviour {
     public void OnJoin()
     {
         if (joinedGame) return;
+        SoundManager.Instance.PlaySound(_spawnSound);
 
         Debug.Log("Player: " + (playerId + 1) + " has joined the game!");
         joinedGame = true;

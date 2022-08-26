@@ -17,7 +17,11 @@ public class HamsterHealth : MonoBehaviour
     [SerializeField] private float targetSquishScale_Y = 0.05f;
     [SerializeField] private float ballKillVelThreshold = 2f;
     [SerializeField] private ParticleSystem squishEffect;
-    
+
+    [Header("Sound Management")]
+    [SerializeField] private AudioClip _respawnSound;
+    [SerializeField] private AudioClip _squishSound;
+
     [SerializeField]
     private float reviveCooldown = 3f;
     // to prevent from re-triggering revive
@@ -97,6 +101,7 @@ public class HamsterHealth : MonoBehaviour
         if(isDirty_Dead) yield break;
         if (!squishEffect.gameObject.activeSelf) squishEffect.gameObject.SetActive(true);
         squishEffect.Stop();
+        SoundManager.Instance.PlaySound(_squishSound);
         squishEffect.Play();
         gameObject.GetComponent<BallRotation>().DropAllNuts();
         float capturedY = transform.localPosition.y;
@@ -117,6 +122,7 @@ public class HamsterHealth : MonoBehaviour
 
     private void OnRevive()
     {
+        SoundManager.Instance.PlaySound(_respawnSound);
         transform.localScale = _capturedScale;
         
         UpdateCollision(false);

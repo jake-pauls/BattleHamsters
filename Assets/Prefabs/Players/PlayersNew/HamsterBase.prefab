@@ -201,7 +201,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -903,7 +903,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3724428072546166048}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 4.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1864,11 +1864,25 @@ MonoBehaviour:
   _enterBallEffect: {fileID: 0}
   _enterBallEventName: 
   _jumpHeight: 500
-  pid: 0
   ballOffset: {x: 0, y: -1, z: 0}
+  _scoreManager: {fileID: 0}
   NutCount: 0
   NutPrefab: {fileID: 1792793853396503825, guid: d70187509926ee74090c73af94089a9a, type: 3}
   _nutCountText: {fileID: 6534599737442337124}
+  _spawnSound: {fileID: 8300000, guid: 6c40613a92d8e4aa7a5bd5c5d9859299, type: 3}
+  _jumpSounds:
+  - {fileID: 8300000, guid: 8892d9fd5a177437d9da833be24e8429, type: 3}
+  - {fileID: 8300000, guid: 8a3b012415a2943118956d885e3a2302, type: 3}
+  _runningSound: {fileID: 8300000, guid: 39419a68af5694ed9909d0d782f0e9e2, type: 3}
+  _runningHeavySound: {fileID: 8300000, guid: 28c423dba96dc4d1286776074765c225, type: 3}
+  _dropNuts:
+  - {fileID: 8300000, guid: 8d9c4729c925b4599bfd85b075f11ba8, type: 3}
+  - {fileID: 8300000, guid: 0cb62f63bb87e4f6baab8252cc584d03, type: 3}
+  - {fileID: 8300000, guid: bd4412ca3e0de4661ad36b09ee720dac, type: 3}
+  _ballEnterSound: {fileID: 8300000, guid: 0b722380704594058a256235cc2f3f11, type: 3}
+  _ballExitSound: {fileID: 8300000, guid: 4132bfa74705c4302b37e758b9a792b2, type: 3}
+  _ballRollingSound: {fileID: 8300000, guid: 8278a04019a894d5f9e5d17da2b593d8, type: 3}
+  _ballCollisionSound: {fileID: 8300000, guid: 6ac6ba68e9642457aa3bc4a0a421f08c, type: 3}
 --- !u!114 &7288047323661076762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1899,6 +1913,8 @@ MonoBehaviour:
   targetSquishScale_Y: 0.05
   ballKillVelThreshold: 2
   squishEffect: {fileID: 5773967094794191271}
+  _respawnSound: {fileID: 8300000, guid: c746855031098419d9975fcd66796914, type: 3}
+  _squishSound: {fileID: 8300000, guid: ed18107012a254d6fbf9cf6d662c3e4e, type: 3}
   reviveCooldown: 3
 --- !u!1 &9027350736280930437
 GameObject:
