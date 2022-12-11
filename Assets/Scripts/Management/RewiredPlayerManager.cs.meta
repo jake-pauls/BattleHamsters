@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/UI/WinnerMenuManager.cs.meta
+guid: 2330c1ec7a370a04e969acee6c9f3e8b
+========
+guid: 9e2ddc4a702706e4680349e71384e3a0
+>>>>>>>> develop:Assets/Scripts/Management/RewiredPlayerManager.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

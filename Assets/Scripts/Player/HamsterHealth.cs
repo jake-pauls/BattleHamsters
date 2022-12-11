@@ -17,7 +17,11 @@ public class HamsterHealth : MonoBehaviour
     [SerializeField] private float targetSquishScale_Y = 0.05f;
     [SerializeField] private float ballKillVelThreshold = 2f;
     [SerializeField] private ParticleSystem squishEffect;
-    
+
+    [Header("Sound Management")]
+    [SerializeField] private AudioClip _respawnSound;
+    [SerializeField] private AudioClip _squishSound;
+
     [SerializeField]
     private float reviveCooldown = 3f;
     // to prevent from re-triggering revive
@@ -51,19 +55,26 @@ public class HamsterHealth : MonoBehaviour
         var capturedVel = ballRigid.velocity.magnitude;
         Debug.Log($"Ball velocity = {capturedVel}");
         if (capturedVel < ballKillVelThreshold) return;
-        
+        revivePayer();
+    }
+
+    public void revivePayer()
+    {
+        CinemachineShake.Instance.ShakeCamera(
+            5f + Mathf.Clamp(gameObject.GetComponent<BallRotation>().NutCount, 0f, 10f),
+            0.8f);
         // disable input
         GetComponent<BallRotation>().inputDisabled = true;
 
         // trigger revive cooldown
         StartCoroutine(TryRevive());
-        
+
         // squish effects
         StartCoroutine(TriggerSquishEffect());
-        
+
         // mark invulnerable
         UpdateCollision(true);
-        
+
         //IMPORTANT mark dirty
         isDirty_Dead = true;
     }
@@ -88,9 +99,11 @@ public class HamsterHealth : MonoBehaviour
     private IEnumerator TriggerSquishEffect()
     {
         if(isDirty_Dead) yield break;
-        squishEffect.gameObject.SetActive(true);
+        if (!squishEffect.gameObject.activeSelf) squishEffect.gameObject.SetActive(true);
         squishEffect.Stop();
+        SoundManager.Instance.PlaySound(_squishSound);
         squishEffect.Play();
+        gameObject.GetComponent<BallRotation>().DropAllNuts();
         float capturedY = transform.localPosition.y;
         float y_Offset = GetComponent<CapsuleCollider>().height / 2 * transform.localScale.y;
         var interval = 0.033f;
@@ -109,12 +122,13 @@ public class HamsterHealth : MonoBehaviour
 
     private void OnRevive()
     {
+        SoundManager.Instance.PlaySound(_respawnSound);
         transform.localScale = _capturedScale;
         
         UpdateCollision(false);
         
         // reset location to the spawning point
-        Transform spawnTrans = PlayerManager.Instance.SpawnPoint(GetComponent<BallRotation>().pid);
+        Transform spawnTrans = RewiredPlayerManager.SpawnPoint(GetComponent<BallRotation>().playerId);
         transform.position = spawnTrans.position;
         transform.rotation = spawnTrans.rotation;
         

@@ -36,6 +36,14 @@ public class TubeEntrance : MonoBehaviour, IInteractable
         //todo validate hamster
         // 1. check player tag
         // 2. check whether in ball form
+        if (source.tag != "Player") {
+            return _parentTube.IsOccupied;
+        }
+
+        if (null != source.transform.parent && source.transform.parent.tag == "PlayerHamsterBall") {
+            return _parentTube.IsOccupied;
+        }
+
         return !_parentTube.IsOccupied;
     }
 

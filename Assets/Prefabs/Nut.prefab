@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 279703607201000644}
   - component: {fileID: 3633760148448467945}
   - component: {fileID: 118702504455121555}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Nut
   m_TagString: Nut
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 4387248658202947999}
   - component: {fileID: 2970291342435801275}
   - component: {fileID: 528543266373718357}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,3 +176,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentNut: {fileID: 1792793853396503825}
+  _nutPickupSound:
+  - {fileID: 8300000, guid: a1aabd0ee29984a699cf07d17e84b45c, type: 3}
+  - {fileID: 8300000, guid: 851bab313ef124f18930352c032b7189, type: 3}
+  - {fileID: 8300000, guid: cbdbea7289c4b4719a070c50380b8ae7, type: 3}
+  - {fileID: 8300000, guid: 81663b6bbb2754de79b70c59bf9b3e24, type: 3}
+  - {fileID: 8300000, guid: be525e9c882364a8ea17fadaf217ff0b, type: 3}
+  - {fileID: 8300000, guid: 422977409f7744af299cafcb2b8cea67, type: 3}
+  - {fileID: 8300000, guid: ee354832ce5844bfcb9273a71d5c30be, type: 3}

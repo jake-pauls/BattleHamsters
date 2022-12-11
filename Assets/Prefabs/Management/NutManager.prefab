@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7645cd4417abf943859ad974bf58d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxNuts: 3
+  _maxNuts: 100
   _spawnRate: 5
   _nutPrefab: {fileID: 1792793853396503825, guid: d70187509926ee74090c73af94089a9a, type: 3}
   _nutSpawnPoint: {fileID: 8436422685307411774}

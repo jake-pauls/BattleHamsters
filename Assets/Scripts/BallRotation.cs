@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.VFX;
+using TMPro;
+using Rewired;
+using System.Collections.Generic;
 
 public class BallRotation : MonoBehaviour {
     public bool inputDisabled;
@@ -12,9 +11,12 @@ public class BallRotation : MonoBehaviour {
     private Vector2 _moveInput;
     private Vector3 _movementInput;
     private Rigidbody _rb;
+    private Player player; // The Rewired Player
+    public int playerId = 0; // The Rewired player id of this character
     public bool _ballMode;
 
-    public float _speed;
+    public float _maxSpeed = 10f; // if changing speed please do in code
+    public float _speed = 10f; // if changing speed please do in code
     [SerializeField] private float _acceleration;
     [SerializeField] private float _gravity;
     [SerializeField] private float _rollSpeed;
@@ -28,19 +30,38 @@ public class BallRotation : MonoBehaviour {
     [SerializeField] private string _enterBallEventName;
     [SerializeField] private float _jumpHeight;
     private float _turnSpeed = 10f;
-    public int pid;
     public Vector3 ballOffset = new Vector3(0, -1f, 0);
     private HamsterHealth hamHealth;
+    [SerializeField]
+    private ScoreManager _scoreManager;
 
     [Header("Nut Management")]
     public int NutCount;
     [SerializeField]
     private GameObject NutPrefab;
     [SerializeField]
-    private Text _nutCountText;
+    private TMP_Text _nutCountText;
+    private bool joinedGame = false;
+
+    [Header("Sound Management")]
+    [SerializeField] private AudioClip _spawnSound;
+    [SerializeField] private List<AudioClip> _jumpSounds;
+    [SerializeField] private AudioClip _runningSound;
+    [SerializeField] private AudioClip _runningHeavySound;
+    [SerializeField] private List<AudioClip> _dropNuts;
+    [SerializeField] private AudioClip _ballEnterSound;
+    [SerializeField] private AudioClip _ballExitSound;
+    [SerializeField] private AudioClip _ballRollingSound;
+    [SerializeField] private AudioClip _ballCollisionSound;
+
 
     private void Awake() {
         hamHealth = GetComponent<HamsterHealth>();
+        player = ReInput.players.GetPlayer(playerId);
+        inputDisabled = true;
+        joinedGame = false;
+        //inputDisabled = true;
+        // Need to set camera and spawn
     }
 
     // Start is called before the first frame update
@@ -50,18 +71,23 @@ public class BallRotation : MonoBehaviour {
         _rb.useGravity = false;
         _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         dustTrail.gameObject.SetActive(false);
+        _scoreManager.disableScoreArea(playerId);
     }
 
     // Update is called once per frame
     void Update() {
-        Vector3 moveInput = new Vector3(-_moveInput.x, 0f, -_moveInput.y).normalized;
-        _movementInput = moveInput;
+        if (!UIManager.IsMainMenuUp)
+        {
+            _moveInput = inputDisabled ? Vector2.zero : new Vector2(player.GetAxis("Move Horizontal"), player.GetAxis("Move Vertical"));
+            Vector3 moveInput = new Vector3(-_moveInput.x, 0f, -_moveInput.y).normalized;
+            _movementInput = moveInput;
+            if (player.GetButtonDown("Jump")) OnJump();
+            if (player.GetButtonDown("Interact")) OnInteract();
+            if (player.GetButtonDown("Drop")) OnDropNut();
+            if (player.GetButtonDown("Join")) OnJoin();
 
-        _nutCountText.text = NutCount.ToString();
-    }
-
-    public void OnMove(InputValue value) {
-        _moveInput = inputDisabled ? Vector2.zero : value.Get<Vector2>();
+            _nutCountText.text = NutCount.ToString();
+        }
     }
 
     private void FixedUpdate() {
@@ -69,11 +95,13 @@ public class BallRotation : MonoBehaviour {
             BallTorque();
             transform.position = _ball.transform.position + ballOffset;
             dustTrail.gameObject.SetActive(true);
+            // Need a better implementation, maybe a loop function in the sound manager
+            //SoundManager.Instance.PlaySound(_ballRollingSound);
         } else {
             Vector3 up = Vector3.up;
             Vector3 right = Camera.main.transform.right;
             Vector3 forward = Vector3.Cross(right, up);
-            Vector3 moveInput = forward * _moveInput.y + right * _moveInput.x;
+            Vector3 moveInput = (forward * _moveInput.y + right * _moveInput.x).normalized;
             Vector3 targetAcceleration = moveInput * _speed;
             Vector3 currentAcceleration = _rb.velocity;
             Vector3 finalAcceleration = (targetAcceleration - currentAcceleration) * _acceleration;
@@ -97,18 +125,10 @@ public class BallRotation : MonoBehaviour {
         Vector3 Torque = Vector3.Cross(Vector3.up, finalAcceleration);
         rb.AddTorque(Torque * _torqueMultiplier);
     }
-    //public void OnFire()
-    //{
-    //    if (!_ballMode)
-    //        OnMount();
-    //    else OnUnmount();
-    //    GetComponent<Animator>().SetTrigger("Interact");
-    //    _enterBallEffect.SendEvent(_enterBallEventName);
-
-    //}
 
     public void OnMount() {
         gameObject.transform.SetParent(_ball.transform);
+        SoundManager.Instance.PlaySound(_ballEnterSound);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), true);
         gameObject.transform.localPosition = Vector3.zero;
         gameObject.transform.localRotation = Quaternion.identity;
@@ -120,6 +140,8 @@ public class BallRotation : MonoBehaviour {
     }
 
     public void OnUnmount() {
+        if (!_ball) return;
+        SoundManager.Instance.PlaySound(_ballExitSound);
         gameObject.transform.SetParent(null);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), _ball.GetComponent<Collider>(), false);
         _ballMode = false;
@@ -141,14 +163,14 @@ public class BallRotation : MonoBehaviour {
 
         if (!_ballMode && IsGrounded()) {
             _rb.AddForce(Vector3.up * _jumpHeight);
+            // Playing multiple times need to work that out
+            //SoundManager.Instance.PlaySound(_jumpSounds[Random.Range(0, _jumpSounds.Count-1)]);
         }
     }
 
     bool IsGrounded() {
         return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
-
-
 
     public void OnInteract() {
         if (inputDisabled) return;
@@ -167,40 +189,58 @@ public class BallRotation : MonoBehaviour {
                 }
             }
         }
-        else {
+        else if (_ballMode) {
             dustTrail.Stop();
             dustTrail.Play();
             OnUnmount();
         }
-
-
     }
 
-    public void OnDropNut() {
+    public void OnDropNut(bool createNuts = true) {
         if (NutCount > 0) {
             // Drop Nut
-            float percentage = _speed * 0.15f;
-            _speed += percentage;
-
             NutCount--;
-            Vector3 newPos = transform.position - (transform.right * 2.0f);
-            Instantiate(NutPrefab, newPos, Quaternion.identity);
+            float lerpSpeed = _maxSpeed - Mathf.Lerp(0, _maxSpeed, NutCount / _maxSpeed) + 1;
+            _speed = lerpSpeed;
+            if (createNuts)
+            {
+                SoundManager.Instance.PlaySound(_dropNuts[Random.Range(0, _dropNuts.Count - 1)]);
+                Vector3 newPos = transform.position - (transform.forward * -1 * 2.0f);
+                GameObject newNut = Instantiate(NutPrefab, newPos, Quaternion.identity);
+                newNut.GetComponent<Rigidbody>().AddExplosionForce(300f, transform.position, 5.0f, 3.0f);
+            }
         }
     }
 
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Player"))
-    //     {
-    //         Rigidbody otherrb = collision.rigidbody;
-    //         // kewk
-    //         FlattenHamster(otherrb.gameObject);
-    //     }
-    // }
-    //
-    // public void FlattenHamster(GameObject otherHamster)
-    // {
-    //     // Kewk
-    //     otherHamster.gameObject.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 1f);
-    // }
+    public void DropAllNuts(bool createNut = true)
+    {
+        while (NutCount != 0)
+        {
+            OnDropNut(createNut);
+        }
+    }
+
+    public void OnJoin()
+    {
+        if (joinedGame) return;
+        SoundManager.Instance.PlaySound(_spawnSound);
+
+        Debug.Log("Player: " + (playerId + 1) + " has joined the game!");
+        joinedGame = true;
+        inputDisabled = false;
+
+        Transform spawnPoint = RewiredPlayerManager.SpawnPoint(playerId);
+        RewiredPlayerManager.PlayersInGame.Add(gameObject);
+        _scoreManager.enableScoreArea(playerId);
+        if (spawnPoint == null)
+        {
+            Debug.LogError("Missing spawn point for player #" + (playerId + 1));
+            return;
+        }
+
+        _rb.GetComponent<BallRotation>().enabled = false;
+        _rb.transform.position = spawnPoint.position;
+        _rb.transform.rotation = spawnPoint.rotation;
+        _rb.GetComponent<BallRotation>().enabled = true;
+    }
 }

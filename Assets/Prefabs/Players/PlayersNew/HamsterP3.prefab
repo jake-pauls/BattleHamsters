@@ -12,6 +12,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7288047323661076765, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
+      propertyPath: playerId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288047323661076765, guid: 72ac3bbd9dd452145a19673a0ed89cbd, type: 3}
       propertyPath: _jumpHeight
       value: 350
       objectReference: {fileID: 0}

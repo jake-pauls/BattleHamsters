@@ -1,43 +1,32 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class DashboardManager : MonoBehaviour {
     [Header("Managers")]
     [SerializeField]
     private ScoreManager _scoreManager;
     [SerializeField]
-    private Timer _timeManager;
+    private Timer _timer;
     [Header("Dashboard Content")]
     [SerializeField]
-    private Text _gameTimerUI;
+    private TMP_Text _gameTimerUI;
     [SerializeField]
-    private Text _p1ScoreUI;
-    [SerializeField]
-    private Text _p2ScoreUI;
-    [SerializeField]
-    private Text _p3ScoreUI;
-    [SerializeField]
-    private Text _p4ScoreUI;
+    private TMP_Text[] _playerScoreUIs;
 
     private void Awake() => ResetDashboard();
 
     private void Update() {
-        _gameTimerUI.text = _timeManager.GetTimeString();
+        _gameTimerUI.text = _timer.GetTimeString();
 
-        _p1ScoreUI.text = _scoreManager.PlayerOneScoreArea.CurrentScore.ToString();
-        _p2ScoreUI.text = _scoreManager.PlayerTwoScoreArea.CurrentScore.ToString();
-        _p3ScoreUI.text = _scoreManager.PlayerThreeScoreArea.CurrentScore.ToString();
-        _p4ScoreUI.text = _scoreManager.PlayerFourScoreArea.CurrentScore.ToString();
+        if (_playerScoreUIs.Length == _scoreManager.ScoreAreas.Length) {
+            for (int i = 0; i < _playerScoreUIs.Length; i++) {
+                _playerScoreUIs[i].text = _scoreManager.ScoreAreas[i].CurrentScore.ToString();
+            }
+        }
     }
 
     public void ResetDashboard() {
-        // Reset Timer
-        _timeManager.ResetTimer();
-        _timeManager.StartTimer = true;
-
-        _p1ScoreUI.text = "0";
-        _p2ScoreUI.text = "0";
-        _p3ScoreUI.text = "0";
-        _p4ScoreUI.text = "0";
+        _timer.ResetTimer();
+        _timer.StartTimer = true;
     }
 }
